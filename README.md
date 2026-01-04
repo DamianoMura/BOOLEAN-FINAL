@@ -67,3 +67,8 @@ Alla fine di questo progetto avrete realizzato un'app completa con:
 ---
 
 ## Buon lavoro! 🚀
+
+# link alle repo:
+
+<a href="#"> backend </a>
+<a href="#"> frontend </a>
