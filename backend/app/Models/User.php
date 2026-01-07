@@ -45,4 +45,46 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //adding relationships
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isDev(): bool
+    {
+        return $this->role && $this->role->name === 'dev';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role && $this->role->name === 'admin';
+    }
+
+    //verify if the user have been assigned a Role
+    public function hasRole(): bool
+    {
+        return $this->roles()->exists();
+    }
+    //used only in user maintenance (changing role)
+    public function isUser(): bool
+    {
+        return $this->hasRole('user');
+    }
+
+    // assign Role to users
+    public function assignRole(string $roleName): void
+    {
+        $role = Role::where('name', $roleName)->firstOrFail();
+        $this->role()->attach($role);
+        $this->save();
+    }
+
+    // Accessor for role label to be shown in page 
+    public function getRoleLabel()
+    {
+        return $this->role->label;
+    }
 }
