@@ -11,6 +11,7 @@ class DashboardController extends Controller
 {
     public function deploy(Request $request)
     {
+
         $defaultUser = Config::get('defaultDevUser');
         if ($request->user()->isDev() && ($request->user()->email === $defaultUser['email'] || $request->user()->name === $defaultUser['name'])) {
             session()->put('default-user', $defaultUser);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -25,7 +26,11 @@ class PasswordController extends Controller
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
-        if (Session::get('default-user')) Session::forget('default-user');
-        return back()->with('status', 'password-updated');
+        if (Session::get('default-user')) {
+
+            Session::forget('default-user');
+            return Redirect::route('dashboard')->with('status', 'You changed the default user credentials!');
+        } else
+            return back()->with('status', 'password-updated');
     }
 }

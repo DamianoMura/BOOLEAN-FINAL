@@ -52,22 +52,23 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+    public function hasRole(): bool
+    {
+        return $this->role()->exists();
+    }
 
     public function isDev(): bool
     {
-        return $this->role && $this->role->name === 'dev';
+        return $this->role()->where('name', 'dev')->exists();
     }
 
     public function isAdmin(): bool
     {
-        return $this->role && $this->role->name === 'admin';
+        return $this->role()->where('name', 'admin')->exists();
     }
 
     //verify if the user have been assigned a Role
-    public function hasRole(): bool
-    {
-        return $this->roles()->exists();
-    }
+
     //used only in user maintenance (changing role)
     public function isUser(): bool
     {
