@@ -9,12 +9,12 @@
         </div>
     </x-slot>
 @if (session('status'))
-<span class="text-center text-green-500 border border-green-500 rounded-lg ">
+<dev class="self-center p-2 text-center text-green-500 border border-green-500 rounded-lg">
     {{ session('status')}}
-</span>
+</dev>
 @endif
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
