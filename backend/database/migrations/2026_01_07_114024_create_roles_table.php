@@ -23,6 +23,7 @@ return new class extends Migration
             ['name' => 'dev', 'label' => 'Amministratore del sito'],
             ['name' => 'admin', 'label' => 'Amministratore dei progetti'],
             ['name' => 'user', 'label' => 'Utente base'],
+            ['name' => 'nau', 'label' => 'Utente non approvato'],
         ]);
     }
 

@@ -11,9 +11,11 @@ class DashboardController extends Controller
 {
     public function deploy(Request $request)
     {
-        if ($request->user()->email === Config::get('defaultDevUser')['email'])
-            return redirect()->intended(route('dev-reset', absolute: false));
-        else
-            return view('dashboard');
+        $defaultUser = Config::get('defaultDevUser');
+        if ($request->user()->isDev() && ($request->user()->email === $defaultUser['email'] || $request->user()->name === $defaultUser['name'])) {
+            session()->put('default-user', $defaultUser);
+            return redirect(route('profile.edit'));
+        }
+        return view('dashboard');
     }
 }

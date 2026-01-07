@@ -13,11 +13,12 @@ Route::get('/dashboard', [DashboardController::class, 'deploy'])->middleware(['a
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dev-reset', function () {
-        return view('auth.devRESET');
-    })->name('dev-reset');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
