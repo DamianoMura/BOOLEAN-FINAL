@@ -1,8 +1,5 @@
-.mt-100{
-  margin-top: 100px;
-}
 .bg-light-gray{
- /* laravel background set for consistency between 2 apps */
+  /* laravel background set for consistency between 2 apps */
   background-color: #F3F4F6
 }
 
@@ -27,11 +24,20 @@
 
 @media (min-width: 768px){
   .logo img {
-      max-width: 400px;
-    }
+    max-width: 400px;
+  }
 }
 @media (min-width: 992px){
   .logo img {
-      max-width: 450px;
-    }
+    max-width: 450px;
+  }
+}
+
+/*=========================*/
+
+/* 
+        utility 
+*/
+.mt-100{
+  margin-top: 100px;
 }
