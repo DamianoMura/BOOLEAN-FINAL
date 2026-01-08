@@ -5,7 +5,8 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 // this application is only for authenticated users so the welcome page is not needed
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect('/login'); //da reinserire una volta il progetto react è pronto all'uso
+    // return view('welcome');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'deploy'])->middleware(['auth', 'verified'])->name('dashboard');

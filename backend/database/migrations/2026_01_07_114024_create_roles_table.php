@@ -20,10 +20,10 @@ return new class extends Migration
         });
 
         DB::table('roles')->insert([
-            ['name' => 'dev', 'label' => 'Amministratore del sito'],
-            ['name' => 'admin', 'label' => 'Amministratore dei progetti'],
-            ['name' => 'user', 'label' => 'Utente base'],
-            ['name' => 'nau', 'label' => 'Utente non approvato'],
+            ['name' => 'dev', 'label' => 'Developer'],
+            ['name' => 'admin', 'label' => 'Administrator'],
+            ['name' => 'user', 'label' => 'Basic User'],
+            ['name' => 'nau', 'label' => 'User awaiting for approval from Dev'],
         ]);
     }
 

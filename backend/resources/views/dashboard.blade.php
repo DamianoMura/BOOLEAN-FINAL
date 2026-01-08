@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex justify-between text-center">
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                {{ __('Dashboard') }}
+              {{Auth::user()->getRoleLabel() }} , {{ __('Dashboard') }}
                 
             </h2>
-           
+           <p>Benvenuto su {{config('app.name','JDWDEV.it')}} {{Auth::user()->name}} </p>
         </div>
     </x-slot>
 @if (session('status'))
@@ -18,7 +18,14 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                   <h2 class="text-center">Here's what you can do as {{Auth::user()->getRoleLabel() }} :</h2>
+                   @if (!Auth::user()->isApproved())
+                   <x-not-verified-dashboard>
+                   </x-not-verified-dashboard>
+                    @else
+
+                   @endif
+
                 </div>
             </div>
         </div>

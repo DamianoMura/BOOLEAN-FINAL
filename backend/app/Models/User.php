@@ -52,14 +52,23 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    //verify if the user have been assigned a Role
     public function hasRole(): bool
     {
         return $this->role()->exists();
     }
 
+    //checks if user is a dev, admin or user
     public function isDev(): bool
     {
         return $this->role()->where('name', 'dev')->exists();
+    }
+
+    public function isApproved(): bool
+    {
+
+        return $this->role()->where('name', 'nau')->exists() ? false : true;
     }
 
     public function isAdmin(): bool
@@ -67,12 +76,12 @@ class User extends Authenticatable
         return $this->role()->where('name', 'admin')->exists();
     }
 
-    //verify if the user have been assigned a Role
+
 
     //used only in user maintenance (changing role)
     public function isUser(): bool
     {
-        return $this->hasRole('user');
+        return $this->role()->where('name', 'user')->exists();
     }
 
     // assign Role to users
@@ -84,8 +93,9 @@ class User extends Authenticatable
     }
 
     // Accessor for role label to be shown in page 
-    public function getRoleLabel()
+    public function getRoleLabel(): ?string
     {
-        return $this->role->label;
+        $role = $this->role()->first();
+        return $role ? $role->label : null;
     }
 }

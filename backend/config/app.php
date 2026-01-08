@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'guest' => env('GUEST_APP_PORT'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
