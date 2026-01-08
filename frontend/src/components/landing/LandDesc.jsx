@@ -5,8 +5,8 @@ const LandDesc = () => {
   return (
     <>
       <h1 className="text-center text-primary">Benvenuto nel mio sito web!</h1>
-      <p>Questo è il mio sito vetrina dove posterò tutti i progetti ed è sviluppato usando <span className='text-success'><FontAwesomeIcon icon={faReact} /> React.js e  <FontAwesomeIcon icon={faBootstrap} />ootstrap.css</span></p>
-      <p>Questa applicazione si interfaccerà con un backoffice basato su  <span className='text-primary'><FontAwesomeIcon icon={faLaravel} /> Laravel 12 e   <FontAwesomeIcon icon={faCss3} /> Tailwind.css </span></p>
+      <p>Questo è il mio sito vetrina dove posterò tutti i progetti ed è sviluppato usando  React.js <FontAwesomeIcon icon={faReact} /> e   bootstrap.css <FontAwesomeIcon icon={faBootstrap} /></p>
+      <p>Questa applicazione si interfaccerà con un backoffice basato su  Laravel 12 <FontAwesomeIcon icon={faLaravel} /> e   Tailwind.css <FontAwesomeIcon icon={faCss3} />  </p>
       <p>
        Gli utenti registrati possono inserire i propri progetti personali con relativi link.
        </p>
