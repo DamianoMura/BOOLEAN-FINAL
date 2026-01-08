@@ -8,6 +8,7 @@ use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
+        DB::table('roles')->insert([
+            ['name' => 'dev', 'label' => 'Developer'],
+            ['name' => 'admin', 'label' => 'Administrator'],
+            ['name' => 'user', 'label' => 'Basic User'],
+            ['name' => 'nau', 'label' => 'User awaiting for approval from Dev'],
+        ]);
 
         // create default dev user;
         $devCredentials = Config::get('defaultDevUser');
