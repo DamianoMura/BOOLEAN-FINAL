@@ -103,4 +103,11 @@ class User extends Authenticatable
         $role = $this->role()->first();
         return $role ? $role : null;
     }
+
+    //to establish a relation with Project into project_user pivot
+
+    public function canEdit()
+    {
+        return $this->belongsToMany(Project::class, 'project_user');
+    }
 }

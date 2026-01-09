@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UpdateRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\devCheck;
@@ -16,7 +17,7 @@ Route::get('/dashboard', [DashboardController::class, 'deploy'])->middleware(['a
 Route::put('/dashboard', [UpdateRole::class, 'update'])->middleware([DevCheck::class])->name('dashboard.role-update');
 
 
-
+Route::resource('/projects', ProjectController::class)->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
