@@ -27,7 +27,7 @@ per l'assegnazione di ruoli useremo la relazione Eloquent Many to Many
 -   3 = dev
 -   2 = admin
 -   1 = user
--   0 = stall-user (deve essere approvato dai dev)
+-   0 = nau (not authorised user)
 
 #### DEV:amministratore del sito.
 
@@ -36,17 +36,33 @@ Nonostante possa gestire gli utenti, non può in alcuna maniera gestire altre ri
 
 ##### - NotaBene :
 
-Questo è un Ruolo assegnato all'utente di default che viene inserito automaticamente nel database al momento del seeding e una volta effettuato il primo accesso, verrà obbligatoriamente richiesto un cambio username e password per motivi di sicurezza.
+Questo è un Ruolo assegnato all'utente di default che viene inserito automaticamente nel database al momento del seeding e una volta effettuato il primo accesso, verrà obbligatoriamente richiesto un cambio username,email e password per motivi di sicurezza in quanto questa è una repo pubblica e chiunque potrà accedere con tutti i permessi del caso.
 
 #### ADMIN:amministratore dei progetti.
 
 L'admin in sostanza decide cosa può venire pubblicato o no, quindi quando un utente crea un Progetto, viene inviata una notifica agli admin che dalla propria dashboard decidono se pubblicarlo o meno, nel caso l'admin non approvasse la pubblicazione, è possibile allegare un messaggio con la motivazione per il rifiuto dando modo all'utente di editare o eliminare il Progetto creato.
-Per questioni di reversibilità non si dà l'opportunità di eliminare i progetti di qualsiasi altro user
+Per questo non si dà l'opportunità di eliminare i progetti di qualsiasi altro user in quanto l'user può modificare il suo progetto indefinitamente affinchè raggiunga un livello accettabile per gli Admin per approvarlo
 
 #### USER: utente base
 
 Gli user hanno permessi soltanto sui propri post,
 quindi ne possono creare di nuovi, e modificare o eliminare solamente il proprio Progetto
+
+#### NAU : Not Authorised User
+
+ho deciso di restringere le possibilità a chi si registra al sito.<br>
+finchè questi utenti non vengono approvati da un DEV user, l'unica cosa che potranno fare è modificare il proprio profilo e vedere l'applicazione react come i guest
+
+<hr>
+
+DEV - gestione user roles  
+ADMIN - creazione(CRUD solo se owner), gestione , approvazione pubblicazioni
+USER - creazione (CRUD solo se owner)
+NAU - guest access
+
+##### a tutti gli utenti viene data la possibilità di aggiornare username email e password
+
+<hr>
 
 ## Backend - EN-UK
 

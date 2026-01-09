@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'dev', 'label' => 'Developer'],
             ['name' => 'admin', 'label' => 'Administrator'],
             ['name' => 'user', 'label' => 'Basic User'],
-            ['name' => 'nau', 'label' => 'User awaiting for approval from Dev'],
+
         ]);
 
         // create default dev user;
