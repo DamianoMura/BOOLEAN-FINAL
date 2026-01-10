@@ -17,8 +17,7 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained(); //represents the author which is always an admin 
             $table->longText('description');
             $table->boolean('published');
-            $table->timestamps('created_at');
-            $table->timestamps('updated_at');
+            $table->timestamps();
         });
     }
 

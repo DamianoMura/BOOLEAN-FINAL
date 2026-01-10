@@ -5,22 +5,27 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\User;
+use App\Models\Role;
 
 class userList extends Component
 {
-    public $users;
-    public $devs;
-    public $admins;
-    public $roles;
+    public $data = [
+        'users',
+        'roles',
+        'devs',
+        'admins'
+    ];
+
     /**
      * Create a new component instance.
      */
-    public function __construct($users = [], $roles = [], $devs, $admins)
+    public function __construct()
     {
-        $this->users = $users;
-        $this->roles = $roles;
-        $this->devs = $devs;
-        $this->admins = $admins;
+        $this->data['users'] = User::all();
+        $this->data['roles'] = Role::all();
+        $this->data['devs'] = Role::where('name', 'dev')->first()->user()->count();
+        $this->data['admins'] = Role::where('name', 'admin')->first()->user()->count();;
     }
 
     /**
@@ -28,6 +33,7 @@ class userList extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.user-list');
+
+        return view('components.dev.user-list', ['data' => $this->data]);
     }
 }

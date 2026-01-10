@@ -16,7 +16,7 @@
             <!-- Users List -->
             <div class="p-6">
                 <ul class="space-y-4">
-                    @foreach ($users as $user)
+                    @foreach ($data['users'] as $user)
                     <li
                         class="flex items-center justify-between p-4 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 group">
                         <!-- User Info -->
@@ -41,7 +41,7 @@
                         </div>
 
                         <!-- Change Role Button -->
-                        @if (!($user->isDev() && $devs==1))
+                        @if (!($user->isDev() && $data['devs']==1))
                         <button command="show-modal" commandfor="dialog-{{$user->id}}"
                             class="px-4 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2">
                             <div class="flex items-center space-x-2">
@@ -109,7 +109,7 @@
                                                 <div class="relative">
                                                     <select name="role"
                                                         class="w-full px-4 py-3 transition-colors duration-200 bg-white border border-gray-300 shadow-sm appearance-none cursor-pointer rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400">
-                                                        @foreach ($roles as $role)
+                                                        @foreach ($data['roles'] as $role)
                                                         <option value="{{$role->name}}" {{ $user->getRoleName() ==
                                                             $role->name ? 'selected' : '' }}
                                                             class="py-2">
@@ -170,15 +170,15 @@
                         <div class="flex items-center space-x-6">
                             <div class="flex items-center">
                                 <div class="w-3 h-3 mr-2 bg-red-500 rounded-full"></div>
-                                <span>Developers: {{ $devs }}</span>
+                                <span>Developers: {{ $data['devs'] }}</span>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-3 h-3 mr-2 bg-blue-500 rounded-full"></div>
-                                <span>Administrators: {{ $admins }}</span>
+                                <span>Administrators: {{ $data['admins'] }}</span>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-3 h-3 mr-2 bg-gray-500 rounded-full"></div>
-                                <span>Total Users: {{ $users->count() }}</span>
+                                <span>Total Users: {{ $data['users']->count() }}</span>
                             </div>
                         </div>
 

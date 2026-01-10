@@ -29,7 +29,7 @@ class PasswordController extends Controller
         if (Session::get('default-user')) {
 
             Session::forget('default-user');
-            return Redirect::route('dashboard')->with('status', 'You changed the default user credentials!');
+            return Redirect::route('dashboard');
         } else
             return back()->with('status', 'password-updated');
     }

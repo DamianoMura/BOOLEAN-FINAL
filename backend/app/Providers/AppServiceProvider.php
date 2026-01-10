@@ -32,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('dev', function () {
             return auth()->check() && auth()->user()->isDev();
         });
+        // Blade::if('components', function () {
+        //     echo $components;
+        // });
 
         //mixed permissions
 

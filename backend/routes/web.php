@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UpdateRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\devCheck;
+use App\Http\Middleware\RoleCheck;
 
 // this application is only for authenticated users so the welcome page is not needed
 Route::get('/', function () {
@@ -13,14 +14,20 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'deploy'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::put('/dashboard', [UpdateRole::class, 'update'])->middleware([DevCheck::class])->name('dashboard.role-update');
 
 
-Route::resource('/projects', ProjectController::class)->middleware(['auth', 'verified']);
+
 
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'deploy'])->name('dashboard')->middleware([RoleCheck::class]);
+
+
+    //route per l'aggiornamento dei ruoli
+    Route::put('/dashboard', [UpdateRole::class, 'update'])->middleware([DevCheck::class])->name('dashboard.role-update');
+
+    Route::resource('/projects', ProjectController::class)->middleware(['auth', 'verified']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 

@@ -1,5 +1,5 @@
 <x-dashboard>
-  <div class="columns-1">
+  {{-- <div class="columns-1"> --}}
     <x-user-list
     :users="$users"
     :roles="$roles"
@@ -7,7 +7,7 @@
     :admins="$admins"
     >
     </x-user-list>
-  </div>
+  {{-- </div> --}}
 
 </x-dashboard>
 

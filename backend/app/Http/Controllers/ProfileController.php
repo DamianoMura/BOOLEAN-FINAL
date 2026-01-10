@@ -26,27 +26,10 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(): RedirectResponse
     {
 
-        $defaultUserConf = Config::get('defaultDevUser');
 
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-        //lets check if the credentials have been both changed
-        if (Session::get('default-user')) {
-
-            $session = Session::get('default-user');
-
-            $defaultUserConf['name'] !== $request->user && $session['name'] = 'changed';
-            $defaultUserConf['email'] !== $request->email && $session['email'] = 'changed';
-
-            Session::put('default-user', $session);
-        }
-        $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
