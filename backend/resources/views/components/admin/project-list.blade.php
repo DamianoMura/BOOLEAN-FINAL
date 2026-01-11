@@ -18,15 +18,13 @@
                          @endif
 
                          @foreach ($elements['projects'] as $project)
-                         <li class="flex flex-col p-4 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 sm:flex-row sm:items-center sm:justify-between">
+                         <li class="flex flex-col gap-3 p-4 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 sm:flex-row sm:items-center sm:justify-between">
                               
                               <!-- Project Info -->
-                              <div
-                                   class="flex flex-col w-full space-y-4 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
+                              <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
                                    <!-- Project ID and Title -->
                                    <div class="flex items-center space-x-3">
-                                        <div
-                                             class="flex items-center justify-center w-10 h-10 border border-blue-200 rounded-full bg-gradient-to-br from-blue-100 to-blue-50">
+                                        <div class="flex items-center justify-center w-10 h-10 border border-blue-200 rounded-full bg-gradient-to-br from-blue-100 to-blue-50">
                                              <span class="font-semibold text-blue-700 capitalize">{{ $project->id
                                                   }}</span>
                                         </div>
@@ -39,79 +37,48 @@
                                              </p>
                                         </div>
                                    </div>
-
-                                   <!-- ASSIGNED EDITORS CON HOVER -->
-                                   <div class="flex items-center justify-between w-full sm:w-auto">
-                                        <div x-data="{ showEditors: false }" @mouseenter="showEditors = true"
-                                             @mouseleave="setTimeout(() => showEditors = false, 150)" class="relative">
-                                             <!-- Trigger -->
-                                             <div @mouseenter="showEditors = true"
-                                                  class="flex items-center justify-between p-2 space-x-2 transition border rounded-lg cursor-pointer hover:bg-gray-50 sm:p-3 sm:space-x-3">
-                                                  <span class="text-sm text-gray-800 font-small sm:text-base">
-                                                       {{ $project->editor->count() - 1 > 0 ? 'Assigned Editors
-                                                       '.($project->editor->count() - 1) : 'No Editors' }}
+                              </div>
+                              <!-- editors -->
+                              <div class="flex flex-col gap-3">
+                                   <div class="relative flex items-center justify-between w-full p-2 space-x-2 border rounded-lg cursor-pointer group hover:bg-gray-50 sm:p-3 sm:space-x-3">
+                                        <div class="w-full text-sm text-center text-gray-800 font-small sm:text-base">
+                                             {{ $project->editor->count() >= 1 ? 'Assigned Editors : ' : 'No Editors' }} {{$project->editor->count() > 1 &&
+                                             $project->editor->count()}}
+                                        @if ($project->editor->count() >=1)
+                                        <div
+                                             class="absolute bottom-0 right-0 p-3 mt-1 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 z-100">
+                                             <div class="flex items-center gap-2">
+                                                  <span>Editors:</span>
+                                                  @foreach ($project->editor as $editor)
+                                                  @if($editor->id != Auth::id())
+                                                  <span class="px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded-full sm:px-3 sm:text-sm">
+                                                       {{ $editor->name }}
                                                   </span>
-                                                  @if (($project->editor->count() - 1)>0)
-                                                  <svg :class="showEditors ? 'text-blue-500 rotate-180' : 'text-gray-400'"
-                                                       class="w-4 h-4 transition transform sm:w-4 sm:h-4" fill="none"
-                                                       stroke="currentColor" viewBox="0 0 24 24">
-                                                       <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2" d="M19 9l-7 7-7-7" />
-                                                  </svg>
                                                   @endif
+                                                  @endforeach
                                              </div>
-
-                                             <!-- Dropdown -->
-                                             @if (($project->editor->count() - 1)>0)
-                                             <div x-show="showEditors" @mouseenter="showEditors = true"
-                                                  @mouseleave="showEditors = false" x-transition.opacity.duration.200ms
-                                                  class="absolute left-0 z-50 p-3 mt-1 bg-white border rounded-lg shadow-lg top-full min-w-[200px] sm:left-auto sm:right-0"
-                                                  style="display: none;">
-                                                  <div class="flex flex-wrap gap-2">
-                                                       @foreach ($project->editor as $editor)
-                                                       @if($editor->id != Auth::id())
-                                                       <span
-                                                            class="px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded-full sm:px-3 sm:text-sm">
-                                                            {{ $editor->name }}
-                                                       </span>
-                                                       @endif
-                                                       @endforeach
-                                                  </div>
-
-                                                  <!-- Freccetta del dropdown -->
-                                                  <div
-                                                       class="absolute -top-1.5 left-4 w-3 h-3 bg-white border-l border-t border-gray-200 transform rotate-45 sm:left-auto sm:right-4">
-                                                  </div>
-                                             </div>
-                                             @endif
+                                   
+                                        </div>
+                                        @endif
                                         </div>
                                    </div>
-                                   <!-- FINE ASSIGNED EDITORS -->
-                              </div>
+                                   <div class="flex gap-3 ">
+                                        <button command="show-modal" commandfor="add-editor-{{$project->id}}"
+                                             class="flex items-center justify-center w-full gap-2 px-3 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 sm:w-auto sm:px-4">
+                                             <i class="fa-solid fa-user-plus"></i>
+                                             <span class="text-xs sm:text-sm">Add Editors</span>
+                                        </button>
+                                   
+                                        <button command="show-modal" commandfor="delete-editor-{{$project->id}}"
+                                             class="flex items-center justify-center w-full gap-2 px-3 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 sm:w-auto sm:px-4">
+                                             <i class="fa-solid fa-user-minus"></i>
+                                             <span class="text-xs sm:text-sm">Delete Editors</span>
+                                        </button>
+                                   </div>
+                              </div>   
 
-                              <!-- Editors Buttons -->
-                              <div
-                                   class="flex flex-col w-full mt-4 space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 sm:mt-0 sm:w-auto">
-                                   <button command="show-modal" commandfor="add-editor-{{$project->id}}"
-                                        class="flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 sm:w-auto sm:px-4">
-                                        <svg class="w-4 h-4 mr-2 sm:w-6 sm:h-6" fill="none" stroke="currentColor"
-                                             viewBox="0 0 24 24">
-                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01M12 8v1m0 0v1m0-1h1m-1 0h-1" />
-                                        </svg>
-                                        <span class="text-xs sm:text-sm">Add Editors</span>
-                                   </button>
-
-                                   <button command="show-modal" commandfor="delete-editor-{{$project->id}}"
-                                        class="flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 sm:w-auto sm:px-4">
-                                        <svg class="w-4 h-4 mr-2 sm:w-6 sm:h-6" fill="none" stroke="currentColor"
-                                             viewBox="0 0 24 24">
-                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4m-4-5h.01M9 16h.01" />
-                                        </svg>
-                                        <span class="text-xs sm:text-sm">Delete Editors</span>
-                                   </button>
-                              </div>
+                              
+                              
                          </li>
 
                          <!-- Modal to add editors -->

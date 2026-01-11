@@ -10,7 +10,14 @@
     </div>
   </x-slot>
   <div class="w-full border border-gray-200 bg-gradient-to-r from-gray-50 to-white">
-   <div class="border-t">
+   <div class="border border-gray-300 rounded-lg">
+      <div class="flex justify-between px-6 py-3">
+        <h2 class="flex items-center text-xl font-bold text-gray-800 sm:text-2xl">
+          <i class="fa-solid fa-folder-tree"></i>
+          <span class="ml-2">Project Index</span>
+        </h2>
+        <a href="{{route('projects.create')}}"><i class="p-3 text-3xl text-green-500 fa-solid fa-folder-plus "></i></a>
+      </div>
    <div class="px-3 py-3 border-t sm:px-4">
     <!-- Projects List -->
     <div class="p-4 sm:p-6">
@@ -42,11 +49,12 @@
               view
             </a>
             @if($project->hasUserAssigned(Auth::id()))
-            
+            <a href="{{route('projects.edit',$project->id)}}">
             <div class="items-center self-end px-4 py-2 text-green-500 bg-green-200 border border-green-500 rounded-lg">
               <span>Edit</span>
-              <a href="{{route('projects.edit',$project->id)}}"><i class="fa-solid fa-pen-ruler"></i></a>
+              <i class="fa-solid fa-pen-ruler"></i>
             </div>
+            </a>
             @endif
           </div>
         </li>
