@@ -13,13 +13,22 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        <div class="relative text-center group">
+                            <i class="absolute text-2xl opacity-100 -top-1 fa-solid fa-address-book group-hover:opacity-0"></i>
+                            <i class="absolute text-2xl opacity-0 -top-1 fa-regular fa-address-book group-hover:opacity-100"></i>
+                            <span class="align-middle ms-10">Dashboard</span>
+                        </div>
                     </x-nav-link>
                   
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
-                        {{ __('Projects') }}
+                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')" class="space-x-2">
+                        <div class="relative text-center group">
+                            <i class="absolute text-2xl opacity-100 -top-1 fa-solid fa-folder group-hover:opacity-0"></i>
+                            <i class="absolute text-2xl opacity-0 -top-1 fa-solid fa-folder-open group-hover:opacity-100"></i>
+                            <span class="align-middle ms-10">Projects</span>
+                        </div> 
+                        
                     </x-nav-link>
                   
                 </div>

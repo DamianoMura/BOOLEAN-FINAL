@@ -1,20 +1,25 @@
 @admin
 <div class="px-4 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white sm:px-6">
      <div class="border border-gray-300 rounded-lg">
-          <h2 class="flex items-center p-4 text-xl font-bold text-gray-800 sm:p-3 sm:text-2xl">
-               <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z" />
-               </svg>
-               <span class="ml-2">Your Projects</span>
-          </h2>
+          <div class="flex justify-between px-6 py-3">
+               <h2 class="flex items-center text-xl font-bold text-gray-800 sm:text-2xl">
+                    <i class="fa-solid fa-folder-tree"></i>
+                    <span class="ml-2">Your Projects</span>
+               </h2>
+               <a href="{{route('projects.create')}}"><i class="p-3 text-3xl text-green-500 fa-solid fa-folder-plus"></i></a>
+          </div>
 
-          <div class="px-3 py-3 border-t sm:px-4">
+          <div class="px-6 py-3 border-t sm:px-4">
                <!-- Projects List -->
                <div class="p-4 sm:p-6">
                     <ul class="space-y-4">
+                         @if($elements['projects']->count()===0)
+                              <li class="text-red-500"> You are either not part of any project or you didn't create any</li>
+                         @endif
+
                          @foreach ($elements['projects'] as $project)
-                         <li
-                              class="flex flex-col p-4 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 sm:flex-row sm:items-center sm:justify-between">
+                         <li class="flex flex-col p-4 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 sm:flex-row sm:items-center sm:justify-between">
+                              
                               <!-- Project Info -->
                               <div
                                    class="flex flex-col w-full space-y-4 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
