@@ -109,6 +109,7 @@ class User extends Authenticatable
 
     public function canEdit()
     {
+
         return $this->belongsToMany(Project::class, 'project_user');
     }
 }

@@ -19,4 +19,9 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class, 'project_user');
     }
+    // Verifica se un utente è assegnato al progetto
+    public function hasUserAssigned($userId)
+    {
+        return $this->editor()->where('user_id', $userId)->exists();
+    }
 }

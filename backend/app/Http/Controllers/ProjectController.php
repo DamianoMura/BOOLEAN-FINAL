@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProjectController extends Controller
@@ -11,14 +12,20 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($request)
+    public function index()
     {
-        $projects  = Project::all();
+        $projects = [];
+        $allProjects = Project::all();
+        if (Auth::user()->getRoleName() == 'user') {
+            foreach ($allProjects as $project)
+                if ($project->hasUserAssigned(Auth::id()) || $project->published == true) {
+                    $projects[] = $project;
+                }
+        } else $projects = $allProjects;
 
-        if (!$request->user()->isAdmin()) {
-            $projects = $projects->where('published', true);
-        }
-        return view('auth.projects.index', ['projects', $projects]);
+
+
+        return view('auth.projects.index', ['projects' => $projects]);
     }
 
     /**
