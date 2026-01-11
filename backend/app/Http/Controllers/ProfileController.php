@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Config;
+use App\Models\Role;
+
 
 class ProfileController extends Controller
 {
@@ -18,18 +18,28 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'devs' => Role::where('name', 'dev')->first()->user()->count()
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(): RedirectResponse
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
 
 
+
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

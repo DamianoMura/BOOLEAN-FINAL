@@ -68,4 +68,26 @@ class ProjectController extends Controller
     {
         //
     }
+    public function assignEditor(Request $request)
+    {
+        // Validazione
+        $project = Project::find($request->project_id);
+        $project->editor()->attach($request->user_id);
+
+
+        $project->save();
+
+        return back()->with('status', 'Added New Editor');
+    }
+    public function removeEditor(Request $request)
+    {
+        // Validazione
+        $project = Project::find($request->project_id);
+        $project->editor()->detach($request->user_id);
+
+
+        $project->save();
+
+        return back()->with('status', 'Editor Removed');
+    }
 }

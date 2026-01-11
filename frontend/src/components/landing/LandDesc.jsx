@@ -4,17 +4,18 @@ import { faLaravel, faReact, faBootstrap , faCss3  } from '@fortawesome/free-bra
 const LandDesc = () => {
   return (
     <>
-      <h1 className="text-center text-primary">Benvenuto nel mio sito web!</h1>
-      <p>Questo è il mio sito vetrina dove posterò tutti i progetti ed è sviluppato usando  React.js <FontAwesomeIcon icon={faReact} /> e   bootstrap.css <FontAwesomeIcon icon={faBootstrap} /></p>
-      <p>Questa applicazione si interfaccerà con un backoffice basato su  Laravel 12 <FontAwesomeIcon icon={faLaravel} /> e   Tailwind.css <FontAwesomeIcon icon={faCss3} />  </p>
+      <h1 className="text-center text-primary">Welcome to my website!</h1>
+      <p>This is my portfolio website where i will post all my projects. <br/>
+      the Frontend part is developed in React.js <FontAwesomeIcon icon={faReact} /> and   bootstrap.css <FontAwesomeIcon icon={faBootstrap} /></p>
+      <p>This application will interact with the backend where i will be using Laravel 12 <FontAwesomeIcon icon={faLaravel} /> and   Tailwind.css <FontAwesomeIcon icon={faCss3} />  </p>
       <p>
-       Gli utenti registrati possono inserire i propri progetti personali con relativi link.
+       I included a role system where Devs can manage the roles, Admins can create Projects and assign other users to work in them
        </p>
        <p>
-        Se invece vuoi solo dare un'occhiata ti basterà cliccare qui sotto per entrare
+        Please feel free to have a look inside, and if you wish, register. you can comment under any Project i posted
        </p>
        <div className="text-center">
-        <a href="#" className="mb-3 btn btn-outline-primary justify-self-center"> entra</a>
+        <a href="#" className="mb-3 btn btn-outline-primary justify-self-center"> enter</a>
        </div>
    </>
   )

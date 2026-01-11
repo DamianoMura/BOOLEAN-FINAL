@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard', [UpdateRole::class, 'update'])->middleware([DevCheck::class])->name('dashboard.role-update');
 
     Route::resource('/projects', ProjectController::class)->middleware(['auth', 'verified']);
+    Route::put('/projects', [ProjectController::class, 'assignEditor'])->name('projects.assignEditor');
+    Route::delete('/projects', [ProjectController::class, 'removeEditor'])->name('projects.removeEditor');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 

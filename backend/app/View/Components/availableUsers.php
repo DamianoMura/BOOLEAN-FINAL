@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class availableUsers extends Component
 {
@@ -20,8 +21,8 @@ class availableUsers extends Component
     public function __construct()
     {
         $users = User::whereHas('role', function ($query) {
-            $query->where('name', 'user');
-        })->get();
+            $query->where('name', 'user')->orWhere('name', 'admin');
+        })->where('id', '!=', Auth::id())->get();
 
 
         foreach ($users as $user)

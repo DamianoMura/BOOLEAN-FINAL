@@ -87,6 +87,7 @@ class User extends Authenticatable
         $this->save();
     }
 
+
     // Accessor for role label to be shown in page 
     public function getRoleName(): ?string
     {

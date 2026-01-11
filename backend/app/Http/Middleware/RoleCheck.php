@@ -21,13 +21,12 @@ class RoleCheck
         if (Auth::user()->isDev()) {
             // dd(Auth::User()->isDev());
 
-
             $components = ['user-list'];
             $request->merge($components);
             // dd($request->query);
         }
         if (Auth::user()->isAdmin()) {
-            $components = ['project-list', 'available-users'];
+            $components = ['available-users', 'project-list'];
             $request->merge($components);
         }
         if (Auth::User()->isUser()) {
