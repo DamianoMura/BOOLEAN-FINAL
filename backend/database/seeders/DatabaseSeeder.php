@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use App\Models\User;
 use App\Models\Role;
 use Database\Seeders\FakeUsers as SeedersFakeUsers;
+use Database\Seeders\FakeProject as SeedersFakeProject;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -28,34 +29,52 @@ class DatabaseSeeder extends Seeder
             ['name' => 'user', 'label' => 'Basic User'],
 
         ]);
-
-        // creation dev user (mandatory);
-        $this->command->info('Creating dev account...');
-
-        $name = $this->command->ask('Name', 'dev');
-        $email = $this->command->ask('Email', 'dev@example.com');
-        $password = $this->command->secret('Password (minimo 8 caratteri)');
-
-        // Base validation for password
-        if (strlen($password) < 8) {
-            $this->command->error('The password must be at least 8 characters');
-            return;
+        $this->command->info('Seeding technologies...');
+        $techList = config('tech-list');
+        foreach ($techList as $tech) {
+            DB::table('technologies')->insert(
+                [
+                    'name' => $tech['name'],
+                    'label' => $tech['label'],
+                    'fontawesome-class' => $tech['fontawesome-class']
+                ]
+            );
         }
+        $this->command->info('Seeding Categories...');
 
-        $dev = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => bcrypt($password),
-        ]);
 
-        $this->command->info("Account dev created: {$dev->email}");
-        $dev->assignRole('dev');
-        $dev->save;
+        DB::table('categories')->insert(
+            [
+                'name' => 'front-end',
+                'label' => 'Front End',
+            ],
+            [
+                'name' => 'back-end',
+                'label' => 'Back End',
+            ],
+            [
+                'name' => 'full-stack',
+                'label' => 'Full Stack',
+            ]
+        );
 
-        //asks if you want to populate with fake users+1 admin
+
+
+
+
+
+
+        //asks if you want to populate with 3 fake users +1 admin
         if ($this->command->confirm('would you like to generate fake accounts for debugging?', true)) {
             $this->call(SeedersFakeUsers::class);
             $this->command->info('Fake users have been generated!');
         }
+        //asks if you want to populate with 2 fake projects
+        if ($this->command->confirm('would you like to generate fake projects for debugging?', true)) {
+            $this->call(SeedersFakeProject::class);
+            $this->command->info('Fake projects have been generated!');
+        }
+
+        $this->command->info('make sure you run the command "php artisan dev:create" to create the first dev or you won\'t be able to use all the functionalities and the website will be empty');
     }
 }

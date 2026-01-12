@@ -14,6 +14,14 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+    public function technology()
+    {
+        return $this->belongsToMany(Technology::class);
+    }
 
     public function editor()
     {
@@ -23,5 +31,10 @@ class Project extends Model
     public function hasUserAssigned($userId)
     {
         return $this->editor()->where('user_id', $userId)->exists();
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug'; // Usa slug nelle URL invece di ID
     }
 }

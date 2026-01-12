@@ -49,7 +49,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('auth.projects.show');
     }
 
     /**

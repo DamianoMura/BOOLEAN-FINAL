@@ -44,12 +44,12 @@
              
             </div>
           <div class="flex items-center mt-3 space-x-3 sm:mt-0">
-            <a href="{{route('projects.show', $project->id)}}" class="items-center">
+            <a href="{{route('projects.show', $project)}}" class="items-center">
               <i class="fa-solid fa-eye"></i>
               view
             </a>
             @if($project->hasUserAssigned(Auth::id()))
-            <a href="{{route('projects.edit',$project->id)}}">
+            <a href="{{route('projects.edit',$project)}}">
             <div class="items-center self-end px-4 py-2 text-green-500 bg-green-200 border border-green-500 rounded-lg">
               <span>Edit</span>
               <i class="fa-solid fa-pen-ruler"></i>

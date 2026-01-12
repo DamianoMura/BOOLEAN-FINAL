@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id()->unique();
+            $table->id();
             $table->string('title');
+            $table->string('slug')->unique();
+            $table->foreignId('category_id')->constrained();
             $table->foreignId('author_id')->constrained(); //represents the author which is always an admin 
             $table->longText('description');
-            $table->boolean('published');
+            $table->boolean('published')->default(false);
             $table->timestamps();
         });
     }

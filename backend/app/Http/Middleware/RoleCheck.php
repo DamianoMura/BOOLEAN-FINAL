@@ -22,7 +22,9 @@ class RoleCheck
             // dd(Auth::User()->isDev());
 
             $components = ['user-list'];
+
             $request->merge($components);
+
             // dd($request->query);
         }
         if (Auth::user()->isAdmin()) {
