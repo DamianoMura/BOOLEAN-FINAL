@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->unique();
             $table->string('name');
             $table->string('label');
-            $table->string('fontawesome-class');
+            $table->string('fontawesome_class');
             $table->timestamps();
         });
     }

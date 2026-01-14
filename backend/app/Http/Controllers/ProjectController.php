@@ -2,38 +2,108 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Project;
+use App\Models\Category;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        $projects = [];
-        $allProjects = Project::all();
-        if (Auth::user()->getRoleName() == 'user') {
-            foreach ($allProjects as $project)
-                if ($project->hasUserAssigned(Auth::id()) || $project->published == true) {
-                    $projects[] = $project;
-                }
-        } else $projects = $allProjects;
 
 
+        // Query base con eager loading
+        $query = Project::query()
+            ->with(['category', 'user', 'technology', 'editor'])
+            ->withCount(['editor as editors_count']);
 
-        return view('auth.projects.index', ['projects' => $projects]);
+        // only admins can see unpublished projects
+        if (!Auth::user()->isAdmin()) {
+            $query = $query->where('published', true);
+        }
+
+
+        // Filtro per categoria
+        if ($request->filled('category') && $request->category != 'all') {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        // Filtro per tecnologia
+        if ($request->filled('technology')) {
+            $query->whereHas('technology', function ($q) use ($request) {
+                $q->where('slug', $request->technology);
+            });
+        }
+
+        // Filtro per stato pubblicazione
+        if ($request->filled('published')) {
+            $isPublished = $request->published === 'true';
+            $query->where('published', $isPublished);
+        }
+
+        // Filtro per ricerca titolo
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('projects.title', 'like', $searchTerm)
+                    ->orWhere('projects.description', 'like', $searchTerm);
+            });
+        }
+
+        // Ordinamento
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        // Assicurati che il campo di ordinamento sia valido
+        $validSortColumns = ['created_at', 'title', 'updated_at'];
+        if (!in_array($sortBy, $validSortColumns)) {
+            $sortBy = 'created_at';
+        }
+
+        $query->orderBy('projects.' . $sortBy, $sortOrder);
+
+        // Paginazione
+        $projects = $query->paginate(12)->withQueryString();
+
+        // Dati per filtri
+        $categories = Category::orderBy('name')->get();
+        $technologies = Technology::orderBy('name')->get();
+
+        // Statistiche
+        $stats = [
+            'total' => $projects->total(),
+            'published' => Project::where(function ($q) {
+                $q->where('author_id', Auth::id())
+                    ->orWhereHas('editor', function ($subQuery) {
+                        $subQuery->where('user_id', Auth::id());
+                    });
+            })->where('published', true)->count(),
+            'drafts' => Project::where(function ($q) {
+                $q->where('author_id', Auth::id())
+                    ->orWhereHas('editor', function ($subQuery) {
+                        $subQuery->where('user_id', Auth::id());
+                    });
+            })->where('published', false)->count(),
+        ];
+
+        return view('auth.projects.index', compact('projects', 'stats',));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('auth.projects.create');
     }
 
     /**
@@ -49,7 +119,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('auth.projects.show');
+        return view('auth.projects.show', compact('project'));
     }
 
     /**

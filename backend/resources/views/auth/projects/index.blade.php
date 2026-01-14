@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
   <x-slot name="header">
     <div class="flex justify-between">
       <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
@@ -23,41 +23,7 @@
     <div class="p-4 sm:p-6">
       <ul class="space-y-4">
         @foreach ($projects as $project)
-        <li class="flex flex-col p-4 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 sm:flex-row sm:items-center sm:justify-between">
-          
-          <!-- Project Info -->
-          
-            <!-- Project ID and Title -->
-            <div class="flex items-center space-x-3">
-              <div
-                class="flex items-center justify-center w-10 h-10 border border-blue-200 rounded-full bg-gradient-to-br from-blue-100 to-blue-50">
-                <span class="font-semibold text-blue-700 capitalize">{{ $project->id
-                  }}</span>
-              </div>
-              <div class="flex flex-col">
-                <span class="text-lg font-semibold text-gray-800 capitalize sm:text-3xl">{{
-                  $project->title }}</span>
-                <p class="mt-1 text-xs capitalize {{ $project->published ? 'text-green-500' : 'text-red-500' }}">
-                  {{ $project->published ? 'published' : 'not published' }}
-                </p>
-              </div>
-             
-            </div>
-          <div class="flex items-center mt-3 space-x-3 sm:mt-0">
-            <a href="{{route('projects.show', $project)}}" class="items-center">
-              <i class="fa-solid fa-eye"></i>
-              view
-            </a>
-            @if($project->hasUserAssigned(Auth::id()))
-            <a href="{{route('projects.edit',$project)}}">
-            <div class="items-center self-end px-4 py-2 text-green-500 bg-green-200 border border-green-500 rounded-lg">
-              <span>Edit</span>
-              <i class="fa-solid fa-pen-ruler"></i>
-            </div>
-            </a>
-            @endif
-          </div>
-        </li>
+        <x-project-snap :project="$project"/>
   
 
         @endforeach
@@ -70,4 +36,86 @@
 
 
 
+</x-app-layout> --}}
+<x-app-layout>
+  <x-slot name="header">
+    <div class="flex justify-between">
+      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+        {{ Auth::user()->getRoleLabel() }}, {{ __('Projects') }}
+      </h2>
+    </div>
+  </x-slot>
+
+  <div class="w-full border border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+    <div class="border border-gray-300 rounded-lg">
+      <!-- Header con statistiche e creazione -->
+      <div class="flex flex-col px-6 py-4 space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+        <div class="flex items-center">
+          <i class="text-2xl text-blue-600 fa-solid fa-folder-tree"></i>
+          <div class="ml-3">
+            <h2 class="text-xl font-bold text-gray-800 sm:text-2xl">Project Index</h2>
+            <p class="text-sm text-gray-600">
+              {{ $stats['total'] }} total • {{ $stats['published'] }} published  @admin • {{ $stats['drafts'] }} drafts @endadmin
+            </p>
+          </div>
+        </div>
+        @admin
+        <div class="flex items-center space-x-3">
+          <!-- Pulsante crea progetto -->
+          <a href="{{ route('projects.create') }}"
+            class="flex items-center px-4 py-2 text-sm font-medium text-green-700 bg-green-100 border border-green-300 rounded-lg hover:bg-green-200">
+            <i class="mr-2 fa-solid fa-folder-plus"></i>
+            New Project
+          </a>
+        </div>
+        @endadmin
+      </div>
+
+      <x-filters-menu :stats="$stats"/>
+   
+
+      <!-- Projects List -->
+      <div class="px-4 py-3 border-t border-gray-200 sm:px-6">
+        @if($projects->count() > 0)
+        <div class="space-y-4">
+          @foreach($projects as $project)
+          
+            <x-project-snap 
+            :project="$project"/>
+
+           
+          
+          @endforeach
+        </div>
+
+        @else
+        <!-- Empty State -->
+        <div class="py-12 text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 mb-4 bg-blue-100 rounded-full">
+            <i class="text-2xl text-blue-600 fa-solid fa-folder-open"></i>
+          </div>
+
+          <h3 class="mb-2 text-xl font-semibold text-gray-800">
+            @if(request()->hasAny(['search', 'category', 'technology', 'published']))
+            No projects match your filters
+            @else
+            No projects yet
+            @endif
+          </h3>
+
+          <p class="mb-6 text-gray-600">
+            @if(request()->hasAny(['search', 'category', 'technology', 'published']))
+            Try adjusting your search or filters
+            @else
+            Start by creating your first project
+            @endif
+          </p>
+
+        </div>
+        @endif
+      </div>
+
+    
+    </div>
+  </div>
 </x-app-layout>

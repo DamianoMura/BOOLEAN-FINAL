@@ -28,11 +28,12 @@ class RoleCheck
             // dd($request->query);
         }
         if (Auth::user()->isAdmin()) {
-            $components = ['available-users', 'project-list'];
+            $components = ['project-list', 'projects-settings'];
             $request->merge($components);
         }
         if (Auth::User()->isUser()) {
-            // dd(Auth::User()->isUser());
+            $components = ['project-list'];
+            $request->merge($components);
         }
 
         return $next($request);

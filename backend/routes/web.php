@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard', [UpdateRole::class, 'update'])->middleware([DevCheck::class])->name('dashboard.role-update');
 
     Route::resource('/projects', ProjectController::class);
+
     Route::put('/projects', [ProjectController::class, 'assignEditor'])->name('projects.assignEditor');
     Route::delete('/projects', [ProjectController::class, 'removeEditor'])->name('projects.removeEditor');
 
@@ -39,4 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// Route pubbliche
+Route::get('/explore', [ProjectController::class, 'publicIndex'])->name('projects.public');
 require __DIR__ . '/auth.php';

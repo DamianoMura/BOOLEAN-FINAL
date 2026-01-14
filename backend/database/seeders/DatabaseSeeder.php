@@ -36,14 +36,14 @@ class DatabaseSeeder extends Seeder
                 [
                     'name' => $tech['name'],
                     'label' => $tech['label'],
-                    'fontawesome-class' => $tech['fontawesome-class']
+                    'fontawesome_class' => $tech['fontawesome-class']
                 ]
             );
         }
         $this->command->info('Seeding Categories...');
 
 
-        DB::table('categories')->insert(
+        DB::table('categories')->insert([
             [
                 'name' => 'front-end',
                 'label' => 'Front End',
@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'full-stack',
                 'label' => 'Full Stack',
             ]
-        );
+        ]);
 
 
 

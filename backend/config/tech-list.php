@@ -32,11 +32,6 @@ return [
     'fontawesome-class' => 'fa-solid fa-database',
   ],
   [
-    'name' => 'mysql',
-    'label' => 'MySql',
-    'fontawesome-class' => 'fa-solid fa-database',
-  ],
-  [
     'name' => 'sqlite',
     'label' => 'SqLite',
     'fontawesome-class' => 'fa-solid fa-database',

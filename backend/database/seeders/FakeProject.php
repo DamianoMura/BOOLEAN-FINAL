@@ -33,6 +33,8 @@ class FakeProject extends Seeder
 
         //fittitious technologies
         $project_1->technology()->attach([1, 3, 5]);
+        $project_1->editor()->attach($project_1->author_id);
         $project_2->technology()->attach([8, 3, 5]);
+        $project_2->editor()->attach($project_2->author_id);
     }
 }
