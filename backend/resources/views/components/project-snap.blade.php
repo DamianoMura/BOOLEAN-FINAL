@@ -89,13 +89,13 @@
                 <i class="fa-solid fa-user-plus"></i>
                 <span class="text-xs sm:text-sm">Add Editors</span>
             </button>
-    
+            @if ($project->editor->count() > 1)
             <button command="show-modal" commandfor="delete-editor-{{$project->id}}"
                 class="flex items-center justify-center w-full gap-2 px-3 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 sm:w-auto sm:px-4">
                 <i class="fa-solid fa-user-minus"></i>
                 <span class="text-xs sm:text-sm">Delete Editors</span>
             </button>
-
+            @endif
             <!-- Modal to add editors -->
             <el-dialog>
                 <dialog id="add-editor-{{$project->id}}" aria-labelledby="dialog-title"
