@@ -38,7 +38,7 @@ class ProjectController extends Controller
         // Filtro per tecnologia
         if ($request->filled('technology')) {
             $query->whereHas('technology', function ($q) use ($request) {
-                $q->where('slug', $request->technology);
+                $q->where('technology_id', $request->technology);
             });
         }
 
