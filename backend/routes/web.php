@@ -23,20 +23,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'deploy'])->name('dashboard')->middleware([RoleCheck::class]);
 
+    Route::resource('/projects', ProjectController::class)->middleware([RoleCheck::class]);
 
     //route per l'aggiornamento dei ruoli
-    Route::put('/dashboard', [UpdateRole::class, 'update'])->name('dashboard.role-update');
-
-    Route::resource('/projects', ProjectController::class);
-
     Route::put('/projects', [ProjectController::class, 'assignEditor'])->name('projects.assignEditor');
     Route::delete('/projects', [ProjectController::class, 'removeEditor'])->name('projects.removeEditor');
-
+    //built in routes from laravel
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
-
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
