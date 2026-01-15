@@ -165,7 +165,7 @@
 
                                 </button>
 
-                                <a href="{{ route('projects.index') }}"
+                                <a href="{{ request()->routeIs('dashboard*') ? route('dashboard') : route('projects.index') }}"
                                     class="items-center w-full p-2 space-x-2 text-center text-red-800 bg-red-200 border border-red-800 rounded-md hover:bg-red-800 hover:text-red-200">
                                     <span>
                                         <i class="fa-solid fa-broom"></i>
