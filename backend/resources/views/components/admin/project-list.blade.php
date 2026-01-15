@@ -7,8 +7,14 @@
                     <span class="ml-2">  Projects you can work on </span>
                     
                </h2>
-               @admin <a href="{{route('projects.create')}}"><i
-                         class="p-3 text-3xl text-green-500 fa-solid fa-folder-plus"></i></a> @endadmin
+               @admin <div class="flex items-center space-x-3">
+                    <!-- Pulsante crea progetto -->
+                    <a href="{{ route('projects.create') }}"
+                         class="flex items-center px-4 py-2 text-sm font-medium text-green-700 bg-green-100 border border-green-300 rounded-lg hover:bg-green-200">
+                         <i class="mr-2 fa-solid fa-folder-plus"></i>
+                         New Project
+                    </a>
+               </div> @endadmin
           </div>
           
           

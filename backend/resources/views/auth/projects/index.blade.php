@@ -54,9 +54,7 @@
           <i class="text-2xl text-blue-600 fa-solid fa-folder-tree"></i>
           <div class="ml-3">
             <h2 class="text-xl font-bold text-gray-800 sm:text-2xl">Project Index</h2>
-            <p class="text-sm text-gray-600">
-              {{ $stats['total'] }} total • {{ $stats['published'] }} published  @admin • {{ $stats['drafts'] }} drafts @endadmin
-            </p>
+            
           </div>
         </div>
         @admin
@@ -71,7 +69,7 @@
         @endadmin
       </div>
 
-      <x-filters-menu :stats="$stats"/>
+      <x-filters-menu />
    
 
       <!-- Projects List -->

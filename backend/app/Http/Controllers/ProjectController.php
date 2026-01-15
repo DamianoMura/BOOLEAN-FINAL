@@ -31,9 +31,8 @@ class ProjectController extends Controller
         $results = $this->applyQueries($request, $query);
 
         $projects = $results['projects'];
-        $stats = $results['stats'];
 
-        return view('auth.projects.index', compact('projects', 'stats',));
+        return view('auth.projects.index', compact('projects'));
     }
 
 
