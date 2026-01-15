@@ -156,25 +156,10 @@ class ProjectController extends Controller
 
 
         // Statistiche
-        $stats = [
-            'total' => $projects->total(),
-            'published' => Project::where(function ($q) {
-                $q->where('author_id', Auth::id())
-                    ->orWhereHas('editor', function ($subQuery) {
-                        $subQuery->where('user_id', Auth::id());
-                    });
-            })->where('published', true)->count(),
-            'drafts' => Project::where(function ($q) {
-                $q->where('author_id', Auth::id())
-                    ->orWhereHas('editor', function ($subQuery) {
-                        $subQuery->where('user_id', Auth::id());
-                    });
-            })->where('published', false)->count(),
-        ];
+
 
         return [
-            'projects' => $projects,
-            'stats' => $stats
+            'projects' => $projects
         ];
     }
 }

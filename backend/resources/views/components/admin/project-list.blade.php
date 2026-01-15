@@ -14,13 +14,14 @@
           
           <div class="border-t sm:px-4">
                <!-- filters -->
+              
                <x-filters-menu />
                <!-- Projects List -->
                <div>
                     <ul class="space-y-4">
                          @if($projects->count()==0)
                          <li class="text-red-500"> You are @admin either @endadmin not part of any project @admin or you
-                              didn't create any @endadmin</li>
+                              didn't create any @endadmin or the filter didn't find any result</li>
                          @endif
 
                          @foreach ($projects as $project)

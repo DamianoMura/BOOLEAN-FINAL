@@ -46,9 +46,7 @@
                                         'selected' : '' }}
                                         class="py-2">
                                         <span class="font-medium">{{ $category->label }}</span>
-                                        <span class="ml-2 font-normal text-gray-500">
-                                            ({{ $category->projects->count() ?? 0 }})
-                                        </span>
+                                        
                                     </option>
                                     @endforeach
                                 </select>
@@ -70,9 +68,7 @@
                                 <option value="{{ $tech->id }}" {{ request('technology')==$tech->id ? 'selected' : '' }}
                                     class="py-2">
                                     <span class="font-medium">{{ $tech->label }}</span>
-                                    <span class="ml-2 font-normal text-gray-500">
-                                        ()
-                                    </span>
+                                   
                                 </option>
                                 @endforeach
                             </select>
@@ -91,20 +87,16 @@
                             <select name="published" class="w-full rounded-lg">
                                 <option value="" class="py-2">
                                     All Status
-                                    <span class="ml-1 font-bold">({{ $stats['total'] }})</span>
+                                    
                                 </option>
                                 <option value="true" {{ request('published')==='true' ? 'selected' : '' }} class="py-2">
                                     Published
-                                    <span class="ml-1 font-semibold text-green-600">
-                                        ({{ $stats['published'] }})
-                                    </span>
+                                   
                                 </option>
                                 <option value="false" {{ request('published')==='false' ? 'selected' : '' }}
                                     class="py-2">
                                     Drafts
-                                    <span class="ml-1 font-semibold text-yellow-600">
-                                        ({{ $stats['drafts'] }})
-                                    </span>
+                                   
                                 </option>
                             </select>
 

@@ -13,17 +13,16 @@ class filtersMenu extends Component
 {
     public $categories;
     public $technologies;
-    public $stats;
+
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
+
         $this->categories = Category::orderBy('name')->get();
         $this->technologies = Technology::orderBy('name')->get();
-        $this->stats['total'] = Project::all()->count();
-        $this->stats['published'] = Project::where('published', true)->count();
-        $this->stats['drafts'] = Project::where('published', false)->count();
     }
 
     /**
