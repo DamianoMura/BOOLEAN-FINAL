@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Project;
-use App\Models\Category;
-use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,18 +14,9 @@ class ProjectController extends Controller
     {
 
 
-        // Query base con eager loading
-        $query = Project::query()
-            ->with(['category', 'user', 'technology', 'editor'])
-            ->withCount(['editor as editors_count']);
-
-        // only admins can see unpublished projects
-        if (!Auth::user()->isAdmin()) {
-            $query = $query->where('published', true);
-        }
 
 
-        $results = $this->applyQueries($request, $query);
+        $results = $this->applyQueries($request);
 
         $projects = $results['projects'];
 
@@ -82,11 +70,13 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+
+        return route('auth.projects.index', ['status', 'project have been deleted']);
     }
     public function assignEditor(Request $request)
     {
-        // Validazione
+
+        // Validation
         $project = Project::find($request->project_id);
         $project->editor()->attach($request->user_id);
 
@@ -107,9 +97,29 @@ class ProjectController extends Controller
         return back()->with('status', 'Editor Removed');
     }
 
-    public static function applyQueries($request, $query)
+    public static function applyQueries($request)
     {
-        // Filtro per categoria
+        if ($request->Uri()->path() == 'projects') {
+            $query = Project::query()
+                ->with(['category', 'user', 'technology', 'editor'])
+                ->withCount(['editor as editors_count']);
+
+            // only admins can see unpublished projects
+            if (!Auth::user()->isAdmin()) {
+                $query = $query->where('published', true);
+            }
+        }
+        if ($request->Uri()->path() == 'dashboard') {
+            $query = Project::query()
+                ->with(['category', 'user', 'technology', 'editor'])
+                ->where(function ($q) {
+                    $q->where('author_id', Auth::id())
+                        ->orWhereHas('editor', function ($subQuery) {
+                            $subQuery->where('user_id', Auth::id());
+                        });
+                });
+        }
+        // Filtro per categoria anti sql injection
         if ($request->filled('category') && $request->category != 'all') {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('name', $request->category);

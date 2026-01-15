@@ -29,15 +29,8 @@ class projectList extends Component
         $this->available_users = User::whereHas('role', function ($query) {
             $query->where('name', 'user')->orWhere('name', 'admin');
         })->get();
-        $query = Project::query()
-            ->with(['category', 'user', 'technology', 'editor'])
-            ->where(function ($q) {
-                $q->where('author_id', Auth::id())
-                    ->orWhereHas('editor', function ($subQuery) {
-                        $subQuery->where('user_id', Auth::id());
-                    });
-            });
-        $results = ProjectController::applyQueries($request, $query);
+
+        $results = ProjectController::applyQueries($request);
         // $dd($results);
         $this->projects = $results['projects'];
     }
