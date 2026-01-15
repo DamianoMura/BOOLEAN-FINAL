@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Role;
+use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Models\Project;
 
 class RoleCheck
@@ -46,7 +46,7 @@ class RoleCheck
                 $error = true;
             }
         }
-        if ($error) return back()->with('status', 'You can\'t perform this action: ' . end($uri) . ' ' . reset($uri));
+        if ($error) throw new AuthorizationException;
 
 
         return $next($request);
