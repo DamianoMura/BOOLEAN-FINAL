@@ -31,25 +31,7 @@
           </div>
           <div class="flex-self-right">
 
-            @if($project->author_id == Auth::id())
-            <div class="flex flex-col">
-              <a
-                class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">
-                <i class="mr-2 translate-x-1 sm:translate-x-0 fa-solid fa-trash"></i>
-                <span class="hidden sm:flex">Edit</span>
-              </a>
-              <form action="{{ route('projects.destroy', $project) }}" method="POST"
-                onsubmit="return confirm('Are you sure you want to delete this project?')" class="self-right">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                  class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">
-                  <i class="mr-2 translate-x-1 sm:translate-x-0 fa-solid fa-trash"></i>
-                  <span class="hidden sm:flex">Delete</span> 
-                </button>
-              </form>
-            </div>
-            @endif
+           
           </div>
         </div>
     </div>

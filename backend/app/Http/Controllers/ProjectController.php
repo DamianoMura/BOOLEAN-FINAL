@@ -28,70 +28,10 @@ class ProjectController extends Controller
         }
 
 
-        // Filtro per categoria
-        if ($request->filled('category') && $request->category != 'all') {
-            $query->whereHas('category', function ($q) use ($request) {
-                $q->where('name', $request->category);
-            });
-        }
+        $results = $this->applyQueries($request, $query);
 
-        // Filtro per tecnologia
-        if ($request->filled('technology')) {
-            $query->whereHas('technology', function ($q) use ($request) {
-                $q->where('technology_id', $request->technology);
-            });
-        }
-
-        // Filtro per stato pubblicazione
-        if ($request->filled('published')) {
-            $isPublished = $request->published === 'true';
-            $query->where('published', $isPublished);
-        }
-
-        // Filtro per ricerca titolo
-        if ($request->filled('search')) {
-            $searchTerm = '%' . $request->search . '%';
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('projects.title', 'like', $searchTerm)
-                    ->orWhere('projects.description', 'like', $searchTerm);
-            });
-        }
-
-        // Ordinamento
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-
-        // Assicurati che il campo di ordinamento sia valido
-        $validSortColumns = ['created_at', 'title', 'updated_at'];
-        if (!in_array($sortBy, $validSortColumns)) {
-            $sortBy = 'created_at';
-        }
-
-        $query->orderBy('projects.' . $sortBy, $sortOrder);
-
-        // Paginazione
-        $projects = $query->paginate(12)->withQueryString();
-
-        // Dati per filtri
-        $categories = Category::orderBy('name')->get();
-        $technologies = Technology::orderBy('name')->get();
-
-        // Statistiche
-        $stats = [
-            'total' => $projects->total(),
-            'published' => Project::where(function ($q) {
-                $q->where('author_id', Auth::id())
-                    ->orWhereHas('editor', function ($subQuery) {
-                        $subQuery->where('user_id', Auth::id());
-                    });
-            })->where('published', true)->count(),
-            'drafts' => Project::where(function ($q) {
-                $q->where('author_id', Auth::id())
-                    ->orWhereHas('editor', function ($subQuery) {
-                        $subQuery->where('user_id', Auth::id());
-                    });
-            })->where('published', false)->count(),
-        ];
+        $projects = $results['projects'];
+        $stats = $results['stats'];
 
         return view('auth.projects.index', compact('projects', 'stats',));
     }
@@ -166,5 +106,75 @@ class ProjectController extends Controller
         $project->save();
 
         return back()->with('status', 'Editor Removed');
+    }
+
+    public static function applyQueries($request, $query)
+    {
+        // Filtro per categoria
+        if ($request->filled('category') && $request->category != 'all') {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        // Filtro per tecnologia
+        if ($request->filled('technology')) {
+            $query->whereHas('technology', function ($q) use ($request) {
+                $q->where('technology_id', $request->technology);
+            });
+        }
+
+        // Filtro per stato pubblicazione
+        if ($request->filled('published')) {
+            $isPublished = $request->published === 'true';
+            $query->where('published', $isPublished);
+        }
+
+        // Filtro per ricerca titolo
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('projects.title', 'like', $searchTerm)
+                    ->orWhere('projects.description', 'like', $searchTerm);
+            });
+        }
+
+        // Ordinamento
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        // Assicurati che il campo di ordinamento sia valido
+        $validSortColumns = ['created_at', 'title', 'updated_at'];
+        if (!in_array($sortBy, $validSortColumns)) {
+            $sortBy = 'created_at';
+        }
+
+        $query->orderBy('projects.' . $sortBy, $sortOrder);
+
+        // Paginazione
+        $projects = $query->paginate(12)->withQueryString();
+
+
+        // Statistiche
+        $stats = [
+            'total' => $projects->total(),
+            'published' => Project::where(function ($q) {
+                $q->where('author_id', Auth::id())
+                    ->orWhereHas('editor', function ($subQuery) {
+                        $subQuery->where('user_id', Auth::id());
+                    });
+            })->where('published', true)->count(),
+            'drafts' => Project::where(function ($q) {
+                $q->where('author_id', Auth::id())
+                    ->orWhereHas('editor', function ($subQuery) {
+                        $subQuery->where('user_id', Auth::id());
+                    });
+            })->where('published', false)->count(),
+        ];
+
+        return [
+            'projects' => $projects,
+            'stats' => $stats
+        ];
     }
 }

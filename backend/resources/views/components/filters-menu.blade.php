@@ -12,7 +12,7 @@
             <!-- Content here -->
             <div
                 class="px-4 py-6 border-t border-gray-200 bg-gradient-to-b from-gray-50/30 to-white sm:px-6 md:px-8 lg:px-10">
-                <form method="GET" action="{{ route('projects.index') }}" class="space-y-6 md:space-y-8">
+                <form method="GET" action="{{ request()->routeIs('dashboard*') ? route('dashboard') : route('projects.index') }}" class="space-y-6 md:space-y-8">
 
                     <!-- Filters Grid -->
                     <div
@@ -71,7 +71,7 @@
                                     class="py-2">
                                     <span class="font-medium">{{ $tech->label }}</span>
                                     <span class="ml-2 font-normal text-gray-500">
-                                        ({{ $tech->projects->count() ?? 0 }})
+                                        ()
                                     </span>
                                 </option>
                                 @endforeach

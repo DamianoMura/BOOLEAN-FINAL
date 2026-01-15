@@ -12,7 +12,7 @@
 
  
                        
-            <div x-data="{ activeTab: '{{$first}}' }" class="border rounded-lg">
+            <div x-data="{ activeTab: '{{$components[0]}}' }" class="border rounded-lg">
             
               <!-- Tabs Header -->
               <div class="flex border-b bg-gray-50">
@@ -37,7 +37,7 @@
 
               
                 @foreach($components as $component)
-                <div x-show="activeTab === '{{ $component }}'" class="space-y-4">
+                <div x-show="activeTab === '{{ $components[0] }}'" class="space-y-4">
                   <x-dynamic-component :component="$component"/>
                 </div>
                 @endforeach

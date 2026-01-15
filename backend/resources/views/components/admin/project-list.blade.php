@@ -13,6 +13,8 @@
           
           
           <div class="border-t sm:px-4">
+               <!-- filters -->
+               <x-filters-menu />
                <!-- Projects List -->
                <div>
                     <ul class="space-y-4">
