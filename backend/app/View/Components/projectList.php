@@ -40,7 +40,6 @@ class projectList extends Component
         $results = ProjectController::applyQueries($request, $query);
         // $dd($results);
         $this->projects = $results['projects'];
-        $this->stats = $results['stats'];
     }
 
     /**

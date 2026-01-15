@@ -107,30 +107,26 @@
 
                     <!-- Sort and Actions -->
 
-                    <div class="flex flex-col ">
+                    
 
                         <!-- Sort + buttons -->
 
-                        <div class="flex flex-col items-center justify-between mb-3 space-x-2 space-y-2 sm:flex-row">
-                            <label class="w-full text-sm font-semibold text-gray-700 sm:text-base md:text-lg">
-                                <i class="mr-2 text-blue-500 fa-solid fa-sort"></i>
-                                Sort by:
-                            </label>
+                        <div class="flex flex-col justify-between space-y-2 sm:items-center sm:flex-row sm:space-x-2 sm:space-y-0">
                             <!--selects-->
-                            <div class="flex justify-between w-full space-x-2">
-                                <!--order by  -->
-                                <select name="sort_by" class="w-full border-2 border-gray-200 rounded-lg">
-                                    <option value="created_at" {{ request('sort_by', 'created_at' )=='created_at'
-                                        ? 'selected' : '' }}>
-                                        Date
+                            <div class="flex items-center w-full space-x-2">
+                                <!--sort by -->
+                               <select name="sort_by" class="w-full border-2 border-gray-200 rounded-lg">
+                                    <option value="created_at" {{ request('sort_by', 'created_at' )=='created_at' ? 'selected' : '' }}>
+                                      Sort by:  Date
                                     </option>
                                     <option value="title" {{ request('sort_by')=='title' ? 'selected' : '' }}>
-                                        Title
+                                      Sort by:  Title
                                     </option>
                                     <option value="updated_at" {{ request('sort_by')=='updated_at' ? 'selected' : '' }}>
-                                        Updated
+                                      Sort by:  Updated
                                     </option>
                                 </select>
+                                
                                 <!--Order asc-desc -->
                                 <select name="sort_order" class="w-full border-2 border-gray-200 rounded-lg">
                                     <option value="desc" {{ request('sort_order', 'desc' )=='desc' ? 'selected' : '' }}>
@@ -140,16 +136,13 @@
                                         Ascending
                                     </option>
                                 </select>
-
-
                             </div>
 
 
 
                             <!-- Buttons Section -->
-                            <div class="flex justify-between w-full space-x-3">
-                                <button type="submit"
-                                    class="items-center w-full p-2 space-x-2 text-green-800 bg-green-200 border border-green-800 rounded-md hover:bg-green-800 hover:text-green-200">
+                            <div class="flex w-full space-x-2 ">
+                                <button type="submit" class="items-center w-full p-2 space-x-2 text-green-800 bg-green-200 border border-green-800 rounded-lg hover:bg-green-800 hover:text-green-200">
                                     <span>
                                         <i class="fa-solid fa-filter"></i>
                                         <span>Apply</span>
@@ -166,7 +159,7 @@
                                 </a>
                             </div>
 
-                        </div>
+                       
 
 
                 </form>
