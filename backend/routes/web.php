@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 
 
     //route per l'aggiornamento dei ruoli
-    Route::put('/dashboard', [UpdateRole::class, 'update'])->middleware([DevCheck::class])->name('dashboard.role-update');
+    Route::put('/dashboard', [UpdateRole::class, 'update'])->name('dashboard.role-update');
 
     Route::resource('/projects', ProjectController::class);
 
