@@ -34,14 +34,19 @@ class RoleCheck
 
 
         //checking if you are trying to access routes you are not supposed to access in the /projects route
-
+        $error = false;
         $uri = explode('/', $request->Uri()->path());
-        if (reset($uri) == 'projects' && (end($uri) === 'edit' || end($uri) === 'delete' || end($uri) === 'create' || end($uri) === 'store')) {
+        if (reset($uri) == 'projects' && (end($uri) === 'edit' || end($uri) === 'delete'  || end($uri) === 'store')) {
             $project = Project::where('slug', $uri[1])->with(['editor'])->first();
             if ($project->editor->contains('user_id', Auth::id()) === false) {
-                return back()->with('status', 'You can\'t perform this action');
+                $error = true;
+            }
+        } else if (reset($uri) == 'projects' && end($uri) === 'create') {
+            if (!Auth::user()->isAdmin()) {
+                $error = true;
             }
         }
+        if ($error) return back()->with('status', 'You can\'t perform this action: ' . end($uri) . ' ' . reset($uri));
 
 
         return $next($request);
