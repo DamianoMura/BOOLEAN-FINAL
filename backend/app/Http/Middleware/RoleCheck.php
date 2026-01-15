@@ -38,11 +38,14 @@ class RoleCheck
         $uri = explode('/', $request->Uri()->path());
         if (reset($uri) == 'projects' && (end($uri) === 'edit' || end($uri) === 'delete'  || end($uri) === 'store')) {
             $project = Project::where('slug', $uri[1])->with(['editor'])->first();
-            if ($project->editor->contains('user_id', Auth::id()) === false) {
+
+            // dd(reset($uri) == 'projects' && end($uri) === 'create');
+            if (!$project->editor->contains('user_id', Auth::id()) === false) {
                 $error = true;
             }
         } else if (reset($uri) == 'projects' && end($uri) === 'create') {
-            if (!Auth::user()->isAdmin()) {
+            if (Auth::user()->isAdmin() === false) {
+
                 $error = true;
             }
         }

@@ -38,7 +38,23 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data =  $request->all();
+        if ($request->has('file')) {
+            $img_path = Storage::putFile('uploads', $data['file']);
+            $data['img_path'] = $img_path;
+        } else {
+            $data['img_path'] = null;
+        }
+
+        $newProject = new Project();
+        $newProject->title = $data['title'];
+        $newProject->author = Auth::user()->id;
+        $newProject->category_id = $data['category'];
+        $newProject->img_path = $data['img_path'];
+        $newProject->content = $data['content'];
+        $newProject->save();
+        $newProject->technologies()->attach($data['technologies']);
+        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
 
     /**
@@ -52,14 +68,36 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project) {}
+    public function edit(Project $project)
+    {
+        return view('auth.projects.edit', compact('project'));
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->all();
+        // if ($request->has('file')) {
+        //     if ($project->img_path) {
+
+        //         Storage::delete($project->img_path);
+        //     }
+
+        //     $img_path = Storage::putFile('uploads', $data['file']);
+        //     $project->img_path = $img_path;
+        // }
+        $project->title = $data['title'];
+        $project->category_id = $data['category'];
+        $project->content = $data['content'];
+        $project->update();
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($data['technologies']);
+        } else {
+            $project->technologies()->detach();
+        }
+        return view('auth.projects.show', compact('project'))->with('status', 'project ' . $project->title . ' updated');
     }
 
     /**
@@ -67,7 +105,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-
+        $delete = Project::find($project);
+        $delete->delete();
+        $delete->save();
         return route('auth.projects.index', ['status', 'project have been deleted']);
     }
     public function assignEditor(Request $request)
