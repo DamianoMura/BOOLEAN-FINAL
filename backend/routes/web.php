@@ -29,8 +29,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/projects', ProjectController::class)->middleware([RoleCheck::class]);
 
-    Route::put('/projects', [ProjectController::class, 'assignEditor'])->name('projects.assignEditor');
-    Route::delete('/projects', [ProjectController::class, 'removeEditor'])->name('projects.removeEditor');
+    Route::put('/projects', [ProjectController::class, 'manageEditor'])->name('projects.manageEditor');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 

@@ -1,42 +1,4 @@
-{{-- <x-app-layout>
-  <x-slot name="header">
-    <div class="flex justify-between">
-      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-        {{Auth::user()->getRoleLabel() }} , {{ __('Projects') }}
 
-      </h2>
-
-
-    </div>
-  </x-slot>
-  <div class="w-full border border-gray-200 bg-gradient-to-r from-gray-50 to-white">
-   <div class="border border-gray-300 rounded-lg">
-      <div class="flex justify-between px-6 py-3">
-        <h2 class="flex items-center text-xl font-bold text-gray-800 sm:text-2xl">
-          <i class="fa-solid fa-folder-tree"></i>
-          <span class="ml-2">Project Index</span>
-        </h2>
-        <a href="{{route('projects.create')}}"><i class="p-3 text-3xl text-green-500 fa-solid fa-folder-plus "></i></a>
-      </div>
-   <div class="px-3 py-3 border-t sm:px-4">
-    <!-- Projects List -->
-    <div class="p-4 sm:p-6">
-      <ul class="space-y-4">
-        @foreach ($projects as $project)
-        <x-project-snap :project="$project"/>
-  
-
-        @endforeach
-      </ul>
-    </div>
-  </div>
-   </div>
-  </div>
-
-
-
-
-</x-app-layout> --}}
 <x-app-layout>
   <x-slot name="header">
     <div class="flex justify-between">
@@ -69,16 +31,17 @@
         @endadmin
       </div>
 
-      <x-filters-menu />
+     
    
 
       <!-- Projects List -->
       <div class="px-4 py-3 border-t border-gray-200 sm:px-6">
+        <x-filters-menu />
         @if($projects->count() > 0)
         <div class="space-y-4">
           @foreach($projects as $project)
           
-            <x-project-snap 
+            <admin-x-project-snap 
             :project="$project"/>
 
            
@@ -105,7 +68,7 @@
             @if(request()->hasAny(['search', 'category', 'technology', 'published']))
             Try adjusting your search or filters
             @else
-            Start by creating your first project
+            No projects have been created yet
             @endif
           </p>
 

@@ -105,34 +105,35 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $delete = Project::find($project);
-        $delete->delete();
-        $delete->save();
-        return route('auth.projects.index', ['status', 'project have been deleted']);
+
+        $title = $project->title;
+        $project->delete();
+
+        return redirect()->route('projects.index')->with('status', 'Project ' . $title . ' deleted successfully.');
     }
-    public function assignEditor(Request $request)
+
+
+    public function manageEditor(Request $request)
     {
 
         // Validation
-        $project = Project::find($request->project_id);
-        $project->editor()->attach($request->user_id);
 
+        $project = Project::find($request->project_id);
+        if ($request->user_ids) {
+            // dd($request->user_ids);
+            $project->editor()->detach();
+
+            foreach ($request->user_ids as $editor) {
+                $project->editor()->attach($editor);
+            }
+        } else  $project->editor()->detach();
+        $project->editor()->attach(Auth::user());
 
         $project->save();
 
         return back()->with('status', 'Added New Editor');
     }
-    public function removeEditor(Request $request)
-    {
-        // Validazione
-        $project = Project::find($request->project_id);
-        $project->editor()->detach($request->user_id);
 
-
-        $project->save();
-
-        return back()->with('status', 'Editor Removed');
-    }
 
     public static function applyQueries($request)
     {

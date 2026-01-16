@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\admin;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -28,6 +28,6 @@ class projectSnap extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.project-snap', ['project', $this->project]);
+        return view('components.admin.project-snap');
     }
 }
