@@ -39,14 +39,18 @@
         <x-filters-menu />
         @if($projects->count() > 0)
         <div class="space-y-4">
-          @foreach($projects as $project)
-          
-            <admin-x-project-snap 
-            :project="$project"/>
+          <ul>
 
-           
-          
-          @endforeach
+            @foreach($projects as $project)
+            <li>
+              <x-admin.project-snap :project="$project"/>
+
+            </li>
+            
+            
+            
+            @endforeach
+          </ul>
         </div>
 
         @else

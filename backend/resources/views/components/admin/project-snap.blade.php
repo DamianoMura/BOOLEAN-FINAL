@@ -1,4 +1,4 @@
-<li class="flex flex-col p-4 space-y-3 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 ">
+<div class="flex flex-col p-4 space-y-3 transition-colors duration-200 border border-gray-100 rounded-lg bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 ">
 
     <!-- Project  -->
     
@@ -24,6 +24,7 @@
                     {{ $project->published ? 'published' : 'not published' }}
                 </p>
                 @endif
+                
             </div>
         </div>
     
@@ -38,13 +39,18 @@
             </a>
         @endif
         @if( $project->author_id===Auth::id())
-        <a href="{{route('projects.edit',$project)}}">
-            <div class="items-center self-end px-4 py-2 text-green-800 bg-green-200 border border-green-800 rounded-lg">
-                <span>Edit</span>
-                <i class="fa-solid fa-pen-ruler"></i>
-            </div>
-        </a>
- 
+        <div>
+            <a href="{{route('projects.edit',$project)}}">
+                <div
+                    class="items-center px-4 py-2 text-green-800 bg-green-200 border border-green-800 rounded-lg hover:text-green-200 hover:bg-green-800">
+                    <span>Edit</span>
+                    <i class="fa-solid fa-pen-ruler"></i>
+                </div>
+            </a>
+        </div>
+        <div>
+            <x-admin.delete-project :project="$project" />
+        </div>
         @endif
     </div>
    </div>
@@ -61,7 +67,7 @@
     @endif
     </div>
     <!-- editors -->
-    <admin-x-editor-section :project="$project"/>
+    <x-admin.editor-section :project="$project"/>
     
-</li>
+</div>
 

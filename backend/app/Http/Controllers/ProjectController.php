@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Category;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -30,7 +31,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('auth.projects.create');
+        $technologies = Technology::all();
+        $categories = Category::all();
+        return view('auth.projects.create', compact('technologies', 'categories'));
     }
 
     /**
@@ -38,23 +41,32 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data =  $request->all();
-        if ($request->has('file')) {
-            $img_path = Storage::putFile('uploads', $data['file']);
-            $data['img_path'] = $img_path;
-        } else {
-            $data['img_path'] = null;
-        }
 
-        $newProject = new Project();
-        $newProject->title = $data['title'];
-        $newProject->author = Auth::user()->id;
-        $newProject->category_id = $data['category'];
-        $newProject->img_path = $data['img_path'];
-        $newProject->content = $data['content'];
-        $newProject->save();
-        $newProject->technologies()->attach($data['technologies']);
-        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+        $project = new Project();
+
+        $published = $request->boolean('published');
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'technologies' => 'array',
+            'technologies.*' => 'exists:technologies,id',
+
+        ]);
+        // dd($validated);
+
+        $project = Project::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'category_id' => $validated['category_id'],
+            'published' => $request->boolean('published'),
+            'author_id' => Auth::id(),
+        ]);
+
+        $project->technology()->attach($validated['technologies']);
+        $project->save();
+
+        return redirect()->route('projects.show', $project)->with('status', 'Project ' . $project->title . ' created successfully.');
     }
 
     /**
@@ -70,7 +82,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('auth.projects.edit', compact('project'));
+        $technologies = Technology::all();
+        $categories = Category::all();
+        return view('auth.projects.edit', compact('project', 'categories', 'technologies'));
     }
 
     /**
@@ -78,26 +92,28 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $request->all();
-        // if ($request->has('file')) {
-        //     if ($project->img_path) {
+        $published = $request->boolean('published');
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'technologies' => 'array',
+            'technologies.*' => 'exists:technologies,id',
 
-        //         Storage::delete($project->img_path);
-        //     }
+        ]);
+        // dd($validated);
 
-        //     $img_path = Storage::putFile('uploads', $data['file']);
-        //     $project->img_path = $img_path;
-        // }
-        $project->title = $data['title'];
-        $project->category_id = $data['category'];
-        $project->content = $data['content'];
-        $project->update();
-        if ($request->has('technologies')) {
-            $project->technologies()->sync($data['technologies']);
-        } else {
-            $project->technologies()->detach();
-        }
-        return view('auth.projects.show', compact('project'))->with('status', 'project ' . $project->title . ' updated');
+        $project->title = $validated['title'];
+        $title = $validated['title'];
+        $project->description = $validated['description'];
+        $project->category_id = $validated['category_id'];
+
+        $project->published = $published;
+
+        $project->technology()->sync($validated['technologies']);
+        $project->save();
+
+        return redirect()->route('projects.show', $project)->with('status', 'Project ' . $title . ' edited successfully.');
     }
 
     /**

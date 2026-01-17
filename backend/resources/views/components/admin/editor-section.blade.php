@@ -26,6 +26,6 @@
 
     </div>
     <!-- editors buttons -->
-    <admin-x-editors-modal :project="$current_project" />
+    <x-admin.editors-modal :project="$current_project" />
 </div>
 @endif

@@ -36,16 +36,11 @@
 
   <div class="w-full py-2 ">
     <div class="w-full bg-white shadow rounded-xl">
-      <x-project-snap :project="$project" />
-      
-
-      
-      
-
-      <!-- content -->
+      <x-admin.project-snap :project="$project" />
+       <!-- content -->
       <div class="p-6">
         <h3 class="font-extrabold text-center">Quick Description</h3>
-       
+        <p>{{$project->description}}</p>
       </div>
     </div>
 

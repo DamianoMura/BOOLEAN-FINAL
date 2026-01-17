@@ -37,10 +37,10 @@ class RoleCheck
         $error = false;
         $uri = explode('/', $request->Uri()->path());
         if (reset($uri) == 'projects' && (end($uri) === 'edit' || end($uri) === 'delete'  || end($uri) === 'store')) {
-            $project = Project::where('slug', $uri[1])->with(['editor'])->first();
+            $project = Project::where('slug', $uri[1])->first();
 
-            // dd(reset($uri) == 'projects' && end($uri) === 'create');
-            if (!$project->editor->contains('user_id', Auth::id()) === false) {
+
+            if ($project->author_id != Auth::id()) {
                 $error = true;
             }
         } else if (reset($uri) == 'projects' && end($uri) === 'create') {

@@ -1,7 +1,7 @@
 <button command="show-modal" commandfor="manage-editors-{{$project->id}}"
-    class="flex items-center justify-center h-full gap-2 px-3 py-2 text-sm font-medium text-blue-700 transition-all duration-200 border border-blue-200 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 sm:w-auto sm:px-4">
+    class="flex items-center justify-center px-4 py-2 space-x-2 text-blue-800 bg-blue-200 border border-blue-800 rounded-lg self-right hover:text-blue-200 hover:bg-blue-800">
     <i class="fa-solid fa-users"></i>
-    Manage Editors
+    <div>Manage Editors</div>
 </button>
 <!-- Modal to delete editors -->
 <el-dialog>

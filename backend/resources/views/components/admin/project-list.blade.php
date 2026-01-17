@@ -2,13 +2,11 @@
      <x-filters-menu />
      @if($projects->count() > 0)
      <div class="space-y-4">
-          @foreach($projects as $project)
-
-          <admin-x-project-snap :project="$project" />
-
-
-
-          @endforeach
+          <ul>
+               @foreach($projects as $project)
+                   <li><x-admin.project-snap :project="$project" /></li> 
+               @endforeach
+          </ul>
      </div>
 
      @else
@@ -29,8 +27,7 @@
           <p class="mb-6 text-gray-600">
                @if(request()->hasAny(['search', 'category', 'technology', 'published']))
                Try adjusting your search or filters
-               @else
-               No projects have been created yet
+               
                @endif
           </p>
 
