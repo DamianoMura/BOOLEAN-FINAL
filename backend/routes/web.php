@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\devCheck;
 use App\Http\Middleware\RoleCheck;
 
-// this application is only for authenticated users so the welcome page is not needed
-Route::get('/', function () {
-    return redirect('/login'); //da reinserire una volta il progetto react è pronto all'uso
-    // return view('welcome');
-});
+
 
 
 

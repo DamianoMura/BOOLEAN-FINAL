@@ -14,7 +14,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}">
+        <link rel="icon" type="image/x-icon" href="{{ Vite::asset('resources/assets/favicon.ico') }}">
         <script>
             // Trusted Types configuration per Alpine.js
         (function() {

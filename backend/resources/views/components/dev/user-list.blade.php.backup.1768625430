@@ -89,7 +89,7 @@
                                         <div class="flex items-center">
                                             <!-- Icon -->
                                             <div class="flex items-center justify-center w-16 h-16">
-                                               <img src="{{ asset('assets/logos/logo-jdw-trans-black.png') }}" alt="Background"
+                                               <img src="{{ Vite::asset('resources/assets/logos/logo-jdw-trans-black.png') }}" alt="Background"
                                                 class="object-cover p-2">
                                             </div>
 
