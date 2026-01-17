@@ -31,7 +31,7 @@
                         <!-- Content -->
                         <div class="flex-1 ml-3 sm:ml-4">
                             <h3 id="delete-user" class="text-base font-semibold text-gray-900 sm:text-lg">
-                                Remove editor from <span class="text-blue-600 capitalize">{{
+                                Manage editors for  : <span class="text-blue-600 capitalize">{{
                                     $project->title }}</span>
                             </h3>
                         </div>
@@ -67,6 +67,7 @@
                                     @endif
                                     @endforeach
                                 </div>
+                                
                             </div>
                         </div>
 
@@ -84,7 +85,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span>Remove Selected Users</span>
+                                    <span>Update Editors</span>
                                 </div>
                             </button>
                         </div>

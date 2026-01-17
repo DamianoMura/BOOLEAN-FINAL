@@ -45,6 +45,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('categories')->insert([
             [
+                'name' => 'NDC',
+                'label' => 'Undefined Category',
+            ],
+            [
                 'name' => 'front-end',
                 'label' => 'Front End',
             ],

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id()->unique();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->default(1);
             $table->foreignId('author_id')->constrained(); //represents the author which is always an admin 
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->boolean('published')->default(false);
             $table->timestamps();
         });

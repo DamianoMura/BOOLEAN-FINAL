@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
-        $middleware->append(ErrorsHandler::class);
+        // $middleware->append(ErrorsHandler::class);
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {

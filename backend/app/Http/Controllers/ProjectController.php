@@ -32,7 +32,7 @@ class ProjectController extends Controller
     public function create()
     {
         $technologies = Technology::all();
-        $categories = Category::all();
+        $categories = Category::all()->where('name', '!=', 'NDC');
         return view('auth.projects.create', compact('technologies', 'categories'));
     }
 
@@ -44,28 +44,29 @@ class ProjectController extends Controller
 
         $project = new Project();
 
-        $published = $request->boolean('published');
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'technologies' => 'array',
+            'technologies' => 'nullable|array',
+            'published'   =>  'nullable|boolean',
             'technologies.*' => 'exists:technologies,id',
 
         ]);
-        // dd($validated);
-
         $project = Project::create([
             'title' => $validated['title'],
-            'description' => $validated['description'],
-            'category_id' => $validated['category_id'],
-            'published' => $request->boolean('published'),
+            'description' => $validated['description'] ?? null,
+            'category_id' => $validated['category_id'] ?? 1,
+            'published' => $request->boolean('published') ?? 0,
             'author_id' => Auth::id(),
         ]);
 
-        $project->technology()->attach($validated['technologies']);
-        $project->save();
 
+        if (isset($validated['technologies']) && !empty($validated['technologies'])) {
+            $project->technologies()->attach($validated['technologies']);
+        }
+        $project->editor()->attach(Auth::user());
         return redirect()->route('projects.show', $project)->with('status', 'Project ' . $project->title . ' created successfully.');
     }
 
@@ -92,28 +93,33 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $published = $request->boolean('published');
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'technologies' => 'array',
+            'technologies' => 'nullable|array',
             'technologies.*' => 'exists:technologies,id',
-
         ]);
-        // dd($validated);
 
         $project->title = $validated['title'];
-        $title = $validated['title'];
-        $project->description = $validated['description'];
-        $project->category_id = $validated['category_id'];
 
-        $project->published = $published;
+        // Usa l'operatore null coalescent per le chiavi nullable
+        $project->description = $validated['description'] ?? $project->description;
+        $project->category_id = $validated['category_id'] ?? $project->category_id;
 
-        $project->technology()->sync($validated['technologies']);
+        // Usa boolean() con valore di default
+        $project->published = $request->boolean('published', false);
+
+        // Gestione delle tecnologie con sync() invece di attach/detach
+        if (isset($validated['technologies'])) {
+            $project->technology()->sync($validated['technologies']);
+        } else {
+            $project->technology()->detach();
+        }
+
         $project->save();
 
-        return redirect()->route('projects.show', $project)->with('status', 'Project ' . $title . ' edited successfully.');
+        return redirect()->route('projects.show', $project)->with('status', 'Project ' . $project->title . ' edited successfully.');
     }
 
     /**
