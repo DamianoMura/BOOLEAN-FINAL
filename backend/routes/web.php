@@ -3,17 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectSectionController;
 use App\Http\Controllers\UpdateRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\devCheck;
 use App\Http\Middleware\RoleCheck;
-
-
-
-
-
-
-
+use App\Models\ProjectSection;
 
 Route::middleware('auth')->group(function () {
 
@@ -23,9 +18,20 @@ Route::middleware('auth')->group(function () {
     //route per l'aggiornamento dei ruoli
     Route::put('/dashboard', [UpdateRole::class, 'update'])->name('dashboard.role-update');
 
-    Route::resource('/projects', ProjectController::class)->middleware([RoleCheck::class]);
 
-    Route::put('/projects', [ProjectController::class, 'manageEditor'])->name('projects.manageEditor');
+    Route::middleware([RoleCheck::class])->group(function () {
+        //projects routes
+        Route::resource('/projects', ProjectController::class);
+        //
+        Route::put('/projects', [ProjectController::class, 'manageEditor'])->name('projects.manageEditor');
+        //project-sections routes
+
+        //editors routes 
+        Route::post('project-sections', [ProjectSectionController::class, 'store'])->name('project-sections.store');
+
+        Route::put('project-sections/{projectSection}', [ProjectSectionController::class, 'update'])->name('project-sections.update');
+    });
+
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

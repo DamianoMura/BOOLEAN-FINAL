@@ -38,9 +38,37 @@
     <div class="w-full bg-white shadow rounded-xl">
       <x-admin.project-snap :project="$project" />
        <!-- content -->
-      <div class="p-6">
-        <h3 class="font-extrabold text-center">Quick Description</h3>
-        <p>{{$project->description}}</p>
+       <div class="p-6">
+        <!-- description -->
+      @if ($project->description)
+        <h3 class="font-extrabold text-center">Quick Description : {{$project->description}}</h3>
+        
+      @else
+          <h3 class="font-extrabold text-center">The Author did not provide any quick description</h3>
+      @endif
+      <!-- Project Sections -->
+      @if ($project->editor->contains(Auth::user()))
+      <div class="flex justify-center py-6">
+        <x-editors.add-project-section :project="$project" />
+      </div>
+      @endif
+                  
+        @if (($project->sections && $project->sections->where('published', true)->count()>0) || $project->editor->contains(Auth::user()))
+        <h3 class="font-extrabold text-center">Full Description</h3>
+        <ul>
+          @foreach ($project->sections as $section)
+              @if($section->published==true || $project->editor->contains(Auth::user()) )
+              <li class="py-1">
+                <x-editors.project-section-component :section="$section" />
+              </li>
+              @endif
+          @endforeach
+        </ul>
+        
+        @else
+        <h3 class="font-extrabold text-center">There is no more details for this project</h3>
+        @endif
+
       </div>
     </div>
 

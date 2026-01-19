@@ -36,7 +36,12 @@ class Project extends Model
     {
         return $this->editor()->where('user_id', $userId)->exists();
     }
-    // slug
+
+    public function sections()
+    {
+        return $this->hasMany(ProjectSection::class, 'project_id')->orderBy('order');
+    }
+    // slug management
     protected static function boot()
     {
         parent::boot();

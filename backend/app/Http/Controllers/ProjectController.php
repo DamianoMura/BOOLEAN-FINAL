@@ -119,7 +119,7 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('projects.show', $project)->with('status', 'Project ' . $project->title . ' edited successfully.');
+        return redirect()->route('projects.show', $project)->with('status', 'Project "' . $project->title . '" edited successfully.');
     }
 
     /**
@@ -131,7 +131,7 @@ class ProjectController extends Controller
         $title = $project->title;
         $project->delete();
 
-        return redirect()->route('projects.index')->with('status', 'Project ' . $title . ' deleted successfully.');
+        return redirect()->route('projects.index')->with('status', 'Project "' . $title . '" deleted successfully.');
     }
 
 
@@ -139,23 +139,22 @@ class ProjectController extends Controller
     {
 
         // Validation
+        $validated = $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'user_ids' => 'nullable|array',
+            'user_ids.*' => 'exists:users,id'
+        ]);
 
-        $project = Project::find($request->project_id);
-        if ($request->user_ids) {
-            // dd($request->user_ids);
-            $project->editor()->detach();
+        $project = Project::findOrFail($validated['project_id']);
 
-            foreach ($request->user_ids as $editor) {
-                $project->editor()->attach($editor);
-            }
-        } else  $project->editor()->detach();
-        $project->editor()->attach(Auth::user());
+        $validated['user_ids'][] = $project->author_id;
 
-        $project->save();
+        $project->editor()->sync($validated['user_ids']);
 
-        return back()->with('status', 'Added New Editor');
+        return back()->with('status', 'Editor(s) updated successfully');
     }
 
+    //index queries 
 
     public static function applyQueries($request)
     {

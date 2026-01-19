@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\AuthorizationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Models\Project;
+use App\Models\ProjectSection;
 
 class RoleCheck
 {
@@ -36,7 +37,7 @@ class RoleCheck
         //checking if you are trying to access routes you are not supposed to access in the /projects route
         $error = false;
         $uri = explode('/', $request->Uri()->path());
-        if (reset($uri) == 'projects' && (end($uri) === 'edit' || end($uri) === 'delete'  || end($uri) === 'store')) {
+        if (reset($uri) == 'projects' && (end($uri) === 'edit' || end($uri) === 'delete'  || end($uri) === 'store' || end($uri) === 'manageEditors')) {
             $project = Project::where('slug', $uri[1])->first();
 
 
@@ -49,6 +50,9 @@ class RoleCheck
                 $error = true;
             }
         }
+
+
+
         if ($error) throw new AuthorizationException;
 
 

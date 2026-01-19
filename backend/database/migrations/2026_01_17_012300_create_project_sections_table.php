@@ -13,10 +13,23 @@ return new class extends Migration
     {
         Schema::create('project_sections', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null');
+            $table->foreignId('last_edited_by')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('set null');
+
+            $table->string('title');
+            $table->boolean('published')->default(false);
+            $table->text('content')->nullable();
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
