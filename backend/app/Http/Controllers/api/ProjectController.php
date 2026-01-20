@@ -1,0 +1,248 @@
+<?php
+
+namespace App\Http\Controllers\api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Project;
+use Illuminate\Http\Request;
+
+class ProjectController extends Controller
+{
+    public function index(Request $request)
+    {
+        // Costruisci e esegui la query con paginazione
+        $query = Project::with([
+            'category',
+            'technology',
+            'sections' => function ($query) {
+                $query->where('published', true)
+                    ->orderBy('order')
+                    ->select('id', 'project_id', 'title', 'content', 'order');
+            },
+            'user' => function ($query) {
+                $query->select('id', 'name');
+            }
+        ])
+            ->where('published', true)
+            ->select('id', 'slug', 'title', 'description', 'category_id', 'author_id', 'created_at', 'updated_at');
+
+        // Applica filtri
+        $this->applyFilters($query, $request);
+
+        // Paginazione
+        $perPage = $request->get('per_page', 15);
+        $maxPerPage = 50;
+        $perPage = min($perPage, $maxPerPage);
+
+        $projects = $query->paginate($perPage);
+
+        // Trasforma i risultati per l'API
+        $transformedProjects = $projects->getCollection()->map(function ($project) {
+            return [
+                'id' => $project->id,
+                'slug' => $project->slug,
+                'title' => $project->title,
+                'description' => $project->description,
+                'created_at' => $project->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $project->updated_at->format('Y-m-d H:i:s'),
+                'category' => $project->category ? [
+                    'id' => $project->category->id,
+                    'name' => $project->category->name,
+
+                ] : null,
+                'author' => $project->user ? [
+                    'id' => $project->user->id,
+                    'name' => $project->user->name,
+                ] : null,
+                'technologies' => $project->technology->map(function ($tech) {
+                    return [
+                        'id' => $tech->id,
+                        'name' => $tech->name,
+                        'fontawesome_class' => $tech->fontawesome_class ?? null,
+                    ];
+                }),
+                'sections' => $project->sections->map(function ($section) {
+                    return [
+                        'id' => $section->id,
+                        'title' => $section->title,
+                        'content' => $section->content,
+                        'order' => $section->order,
+                    ];
+                }),
+                'stats' => [
+                    'sections_count' => $project->sections->count(),
+                    'technologies_count' => $project->technology->count(),
+                ]
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $transformedProjects,
+            'meta' => [
+                'total' => $projects->total(),
+                'per_page' => $projects->perPage(),
+                'current_page' => $projects->currentPage(),
+                'last_page' => $projects->lastPage(),
+                'from' => $projects->firstItem(),
+                'to' => $projects->lastItem(),
+            ],
+            'links' => [
+                'first' => $projects->url(1),
+                'last' => $projects->url($projects->lastPage()),
+                'prev' => $projects->previousPageUrl(),
+                'next' => $projects->nextPageUrl(),
+            ]
+        ]);
+    }
+
+    protected function applyFilters($query, $request)
+    {
+        // Filtro per categoria (per ID o nome)
+        if ($request->filled('category')) {
+            if ($request->category != 'all') {
+                if (is_numeric($request->category)) {
+                    $query->where('category_id', $request->category);
+                } else {
+                    $query->whereHas('category', function ($q) use ($request) {
+                        $q->where('name', $request->category);
+                    });
+                }
+            }
+        }
+
+        // Filtro per tecnologia (ID o nome)
+        if ($request->filled('technology')) {
+            if (is_numeric($request->technology)) {
+                $query->whereHas('technology', function ($q) use ($request) {
+                    $q->where('id', $request->technology);
+                });
+            } else {
+                $query->whereHas('technology', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->technology . '%');
+                });
+            }
+        }
+
+        // Filtro per autore
+        if ($request->filled('author')) {
+            if (is_numeric($request->author)) {
+                $query->where('author_id', $request->author);
+            } else {
+                $query->whereHas('user', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->author . '%');
+                });
+            }
+        }
+
+        // Filtro per ricerca
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', $searchTerm)
+                    ->orWhere('description', 'like', $searchTerm)
+                    ->orWhereHas('technology', function ($q) use ($searchTerm) {
+                        $q->where('name', 'like', $searchTerm);
+                    })
+                    ->orWhereHas('category', function ($q) use ($searchTerm) {
+                        $q->where('name', 'like', $searchTerm);
+                    });
+            });
+        }
+
+        // Ordinamento
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        $validSortColumns = ['created_at', 'title', 'updated_at', 'id'];
+        if (!in_array($sortBy, $validSortColumns)) {
+            $sortBy = 'created_at';
+        }
+
+        $query->orderBy($sortBy, $sortOrder);
+
+        return $query;
+    }
+
+    public function show($slug)
+    {
+        $project = Project::with([
+            'category',
+            'technology',
+            'sections' => function ($query) {
+                $query->where('published', true)
+                    ->orderBy('order');
+            },
+            'user',
+            'editor' => function ($query) {
+                $query->select('id', 'name', 'email');
+            }
+        ])
+            ->where('published', true)
+            ->where('slug', $slug)
+            ->first();
+
+        if (!$project) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Project not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $project->id,
+                'slug' => $project->slug,
+                'title' => $project->title,
+                'description' => $project->description,
+                'created_at' => $project->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $project->updated_at->format('Y-m-d H:i:s'),
+                'category' => $project->category ? [
+                    'id' => $project->category->id,
+                    'name' => $project->category->name,
+                    // Rimuovi slug se non esiste
+                    // 'slug' => $project->category->slug,
+                    'description' => $project->category->description ?? null,
+                ] : null,
+                'author' => $project->user ? [
+                    'id' => $project->user->id,
+                    'name' => $project->user->name,
+                    'email' => $project->user->email,
+                ] : null,
+                'technologies' => $project->technology->map(function ($tech) {
+                    return [
+                        'id' => $tech->id,
+                        'name' => $tech->name,
+                        // Rimuovi slug se non esiste
+                        // 'slug' => $tech->slug,
+                        'description' => $tech->description ?? null,
+                        'color' => $tech->color ?? null,
+                        'icon' => $tech->icon ?? null,
+                    ];
+                }),
+                'sections' => $project->sections->map(function ($section) {
+                    return [
+                        'id' => $section->id,
+                        'title' => $section->title,
+                        'content' => $section->content,
+                        'order' => $section->order,
+                        'created_at' => $section->created_at->format('Y-m-d H:i:s'),
+                    ];
+                }),
+                'editors' => $project->editor->map(function ($editor) {
+                    return [
+                        'id' => $editor->id,
+                        'name' => $editor->name,
+                        'email' => $editor->email,
+                    ];
+                }),
+                'stats' => [
+                    'sections_count' => $project->sections->count(),
+                    'technologies_count' => $project->technology->count(),
+                    'editors_count' => $project->editor->count(),
+                ]
+            ]
+        ]);
+    }
+}

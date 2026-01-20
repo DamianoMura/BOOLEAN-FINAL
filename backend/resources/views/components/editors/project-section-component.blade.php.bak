@@ -1,9 +1,0 @@
-<div class="w-full border border-gray-300 rounded-lg">
-    <div class="mb-2 text-center bg-gray-200 heading">
-    <h4 class="text-lg">{{$section->title}}</h4>
-    <span class="font-semibold">created by: {{}} </span>
-    </div>
-    <p>{{$section->content}}</p>
-    
-   
-</div>

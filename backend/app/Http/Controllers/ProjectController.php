@@ -223,11 +223,23 @@ class ProjectController extends Controller
         $projects = $query->paginate(12)->withQueryString();
 
 
-        // Statistiche
-
 
         return [
-            'projects' => $projects
+            'projects' => $projects,
+            'meta' => [
+                'total' => $projects->total(),
+                'per_page' => $projects->perPage(),
+                'current_page' => $projects->currentPage(),
+                'last_page' => $projects->lastPage(),
+                'from' => $projects->firstItem(),
+                'to' => $projects->lastItem(),
+            ],
+            'links' => [
+                'first' => $projects->url(1),
+                'last' => $projects->url($projects->lastPage()),
+                'prev' => $projects->previousPageUrl(),
+                'next' => $projects->nextPageUrl(),
+            ]
         ];
     }
 }
