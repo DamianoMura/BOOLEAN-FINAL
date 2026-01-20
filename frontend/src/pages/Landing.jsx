@@ -10,8 +10,8 @@ const Landing = () => {
       <nav className="container mt-3 navbar navbar-expand-lg">
         <div className="container-fluid d-flex justify-content-end">
           <div className="user-buttons">
-            <a href="http://localhost:8000/login" className="nav-button" >Login</a> or 
-            <a href="http://localhost:8000/register" className="nav-button" >Register</a>
+            <a href="http://localhost:8000/login" className="landing-button" >Login</a> or 
+            <a href="http://localhost:8000/register" className="landing-button" >Register</a>
           </div>
       </div>
     </nav>

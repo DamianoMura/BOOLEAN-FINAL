@@ -1,9 +1,5 @@
-.bg-light-gray{
-  /* laravel background set for consistency between 2 apps */
-  background-color: #F3F4F6
-}
 
-.nav-button{
+.landing-button{
   background-color: #F3F4F6;
   color: gray;
   text-decoration: none;
@@ -36,8 +32,30 @@
 /*=========================*/
 
 /* 
-        utility 
+utility 
 */
 .mt-100{
   margin-top: 100px;
+}
+.mt-40{
+  margin-top: 40px;
+}
+.mb-2{
+  margin-bottom: 2px;
+}
+
+.bg-light-gray{
+  /* laravel background set for consistency between 2 apps */
+  background-color: #F3F4F6
+}
+
+.rounded-lg{
+  border-radius: 5px;
+}
+.border-gray-200{
+  border-color: rgb(200, 200, 200);
+}
+
+.h-full{
+  height:100%;
 }

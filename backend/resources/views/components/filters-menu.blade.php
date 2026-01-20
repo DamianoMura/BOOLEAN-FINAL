@@ -7,7 +7,7 @@
                 <i class="transition-transform duration-300 fa-solid fa-chevron-down"
                     :class="open ? 'rotate-180' : ''"></i>
             </div>
-        </button>
+        </button>S
         <div x-show="open" x-collapse class="p-4 border-t border-gray-100">
             <!-- Content here -->
             <div
