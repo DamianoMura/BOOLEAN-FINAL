@@ -1,9 +1,10 @@
+import React from 'react'
+import LandDesc from './components/landing/LandDesc'
+import LandImg from './components/landing/LandImg'
 
-import LandDesc from '../components/landing/LandDesc'
-import LandImg from '../components/landing/LandImg'
 
-const HomePage = () => {
-  return (
+const Landing = () => {
+ return (
 <>
     <header className="sticky-top">
       <nav className="container mt-3 navbar navbar-expand-lg">
@@ -21,10 +22,10 @@ const HomePage = () => {
           <div className="container">
             <div className="row">
               <div className="order-2 p-5 col-12 col-lg-6 order-lg-1 d-flex flex-column justify-content-center">
-                <LandDesc></LandDesc>
+                <LandDesc/>
               </div>
               <div className="order-1 rounded col-12 col-lg-6 order-lg-2 bg-secondary d-flex flex-column justify-content-center align-items-center logo">
-                <LandImg></LandImg>
+                <LandImg/>
               </div>
             </div>
           </div>
@@ -35,4 +36,5 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default Landing
+

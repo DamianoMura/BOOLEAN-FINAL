@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaravel, faReact, faBootstrap , faCss3  } from '@fortawesome/free-brands-svg-icons';
+import { Link } from "react-router-dom";
 const LandDesc = () => {
   return (
     <>
@@ -16,7 +17,8 @@ const LandDesc = () => {
         Please feel free to have a look inside! (cv included) 
        </p>
        <div className="text-center">
-        <a href="#" className="mb-3 btn btn-outline-primary justify-self-center"> enter</a>
+        
+        <Link to ="/home" className="mb-3 btn btn-outline-primary justify-self-center"> enter</Link>
        </div>
    </>
   )
