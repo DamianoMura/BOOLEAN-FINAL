@@ -5,7 +5,7 @@
             <h4 class="text-lg capitalize ">{{$section->title}}</h4>
         </div>
         @if ( $section->user_id == Auth::id() || Auth::user()->isAdmin())
-            <div>
+            <div class="text-right">
                 <x-editors.edit-project-section :projectid="$section->project_id" :section="$section" />
             </div>
            
@@ -62,14 +62,15 @@
         @endadmin
         
         <div class="flex flex-col w-full space-x-0 space-y-2 text-right sm:space-y-0 sm:space-x-2 sm:flex-row sm:justify-end">
-            <div>
-                created by : {{ $section->user_id == Auth::id() ? 'you' : $section->author->name}} 
+            <div class="flex flex-col text-center lg:flex-row lg:w-full">
+              <span>created by :</span> <span>{{ $section->user_id == Auth::id() ? 'you' : $section->author->name}}</span> 
             </div>
-            <div>
-                Last edited by : {{$section->last_edited_by== Auth::id() ? 'you' : $section->lastEditedBy->name }} 
+            <div class="flex flex-col text-center lg:flex-row lg:w-full">
+              <span>Last edited by :</span> <span>{{$section->last_edited_by== Auth::id() ? 'you' : $section->lastEditedBy->name }}</span> 
             </div>
-            <div>
-                {{$section->updated_at ? 'Last Updated At' : 'Created At' }} : {{$section->updated_at ? $section->updated_at : $section->created_at }}
+            <div class="flex flex-col text-center lg:flex-row lg:w-full">
+               <span>{{$section->updated_at ? 'Last Updated At' : 'Created At' }} :</span> 
+               <span>{{$section->updated_at ? $section->updated_at : $section->created_at }}</span> 
             </div>
         </div>
     </div>

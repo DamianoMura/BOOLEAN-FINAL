@@ -1,5 +1,5 @@
 <button command="show-modal" commandfor="edit-section-{{$section->id}}"
-    class="flex items-center space-x-1 text-green-700 lg:w-36"><i class="fa-solid fa-pen-ruler"></i> <span>edit</span> </button>
+    class="items-center space-x-1 text-green-700 "><i class="fa-solid fa-pen-ruler"></i> <span>edit</span> </button>
 </button>
 <!-- Modal to delete editors -->
 <el-dialog>
