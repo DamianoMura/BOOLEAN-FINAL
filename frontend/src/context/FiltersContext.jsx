@@ -69,11 +69,17 @@ export const FiltersProvider = ({ children }) => {
 
   // refresh filters
   const updateFilters = useCallback((newFilters) => {
+    if(newFilters['search'].length>25) {
+      resetFilters
+      alert('your search field is way too long, retry')
+      document.getElementById('search').value=''
+    }
+    else
     setFilters(prev => ({ ...prev, ...newFilters }));
   }, []);
 
   // reset filters
-  const resetFilters = useCallback(() => {
+   const resetFilters = useCallback(() => {
     setFilters({
       search: '',
       category: 'all',

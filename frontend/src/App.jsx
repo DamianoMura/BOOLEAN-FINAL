@@ -11,7 +11,7 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import ProjectsPage from "./pages/ProjectsPage";
-import NotFound from './pages/NotFound';
+
 
 //layouts
 import DefaultLayout from "./layouts/DefaultLayout";
@@ -30,7 +30,7 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/not-found" element={<NotFound />} />
+            
           </Route>
         </Routes>
 

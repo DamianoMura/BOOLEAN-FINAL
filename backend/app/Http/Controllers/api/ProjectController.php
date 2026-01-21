@@ -10,6 +10,13 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->has('search') && strlen($request->search) > 25) {
+            return response()->json([
+                'success' => false,
+                'message' => 'the field is too long',
+                'error_code' => 'SEARCH_TOO_LONG'
+            ], 400);
+        }
         // Costruisci e esegui la query con paginazione
         $query = Project::with([
             'category',

@@ -99,6 +99,7 @@ const Filters = ({
                       Search Projects
                     </label>
                     <input
+                    id='search'
                       type="text"
                       className="form-control"
                       placeholder="Type name or description ..."

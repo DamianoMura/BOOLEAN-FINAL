@@ -15,17 +15,19 @@ const ProjectsPage = () => {
 
 // we make a db call with location.search as string query
 	  useEffect(()=>{
-    axios.get(`http://localhost:8000/api/projects`).then((resp)=>{
+    axios.get(`http://localhost:8000/api/projects${location.search}`).then((resp)=>{
       
       setProjects(resp.data.data);
     }).catch((err) => navigate("/not-found", {replace : true}));
-  },[])
+  },[location.search])
   useEffect(()=>{
 		const qS = new URLSearchParams();
       const currentFilters=Object.entries(filters)
-      console.log(currentFilters)
+      
       currentFilters.map((query)=>{
-        qS.set(query[0],query[1])
+      
+            qS.set(query[0], query[1]);
+       
       })
 			navigate({ search: qS.toString() }, { replace: true });
 	},[filters])

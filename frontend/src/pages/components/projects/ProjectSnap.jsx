@@ -1,7 +1,7 @@
 import React from 'react'
 
 const ProjectSnap = ({project}) => {
-  console.log(project)
+  
   return (
     <div className="flex-col p-4 space-y-3 transition-colors duration-200 border border-gray-100 rounded-lg d-flex bg-gradient-to-r from-gray-50/50 to-white hover:border-blue-200 ">
 
