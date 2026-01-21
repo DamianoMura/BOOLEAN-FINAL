@@ -24,14 +24,14 @@ const Breadcrumbs = () => {
       .join(' ');
   };
   return (
-    <Dom.Breadcrumb className="p-3 bg-white shadow">
+    <Dom.Breadcrumb className="p-2 bg-white shadow">
         {pathnames.map((name, index) => {
         const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
         const isLast = index === pathnames.length - 1;
         
         return  (
-          <Dom.Breadcrumb.Item active key={routeTo} className="text-center w-100">
-           <h1 > {formatName(name)}</h1>
+          <Dom.Breadcrumb.Item active key={routeTo} className="text-center w-100 ">
+           <h4 className="m-0"> {formatName(name)}</h4>
           </Dom.Breadcrumb.Item>
         ) 
       })}

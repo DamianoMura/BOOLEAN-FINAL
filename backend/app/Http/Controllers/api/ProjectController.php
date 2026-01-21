@@ -48,6 +48,7 @@ class ProjectController extends Controller
                 'category' => $project->category ? [
                     'id' => $project->category->id,
                     'name' => $project->category->name,
+                    'label' => $project->category->label,
 
                 ] : null,
                 'author' => $project->user ? [
@@ -58,6 +59,7 @@ class ProjectController extends Controller
                     return [
                         'id' => $tech->id,
                         'name' => $tech->name,
+                        'label' => $tech->label,
                         'fontawesome_class' => $tech->fontawesome_class ?? null,
                     ];
                 }),
@@ -201,9 +203,7 @@ class ProjectController extends Controller
                 'category' => $project->category ? [
                     'id' => $project->category->id,
                     'name' => $project->category->name,
-                    // Rimuovi slug se non esiste
-                    // 'slug' => $project->category->slug,
-                    'description' => $project->category->description ?? null,
+                    'label' => $project->category->label,
                 ] : null,
                 'author' => $project->user ? [
                     'id' => $project->user->id,
@@ -214,11 +214,8 @@ class ProjectController extends Controller
                     return [
                         'id' => $tech->id,
                         'name' => $tech->name,
-                        // Rimuovi slug se non esiste
-                        // 'slug' => $tech->slug,
-                        'description' => $tech->description ?? null,
-                        'color' => $tech->color ?? null,
-                        'icon' => $tech->icon ?? null,
+                        'label' => $tech->label,
+                        'fontawesome_class' => $tech->fontawesome_class ?? null,
                     ];
                 }),
                 'sections' => $project->sections->map(function ($section) {
@@ -237,11 +234,7 @@ class ProjectController extends Controller
                         'email' => $editor->email,
                     ];
                 }),
-                'stats' => [
-                    'sections_count' => $project->sections->count(),
-                    'technologies_count' => $project->technology->count(),
-                    'editors_count' => $project->editor->count(),
-                ]
+
             ]
         ]);
     }

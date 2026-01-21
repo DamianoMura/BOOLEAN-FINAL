@@ -12,7 +12,7 @@ const DefaultLayout = () => {
     <div>
 			<Navbar />
       <Breadcrumbs/>
-			<main className="px-4 mt-40">
+			<main className="mx-auto mt-40  max-w-7x1" >
         <Outlet />
 			</main>
 			

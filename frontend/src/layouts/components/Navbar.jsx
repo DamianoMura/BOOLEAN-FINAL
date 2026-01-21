@@ -10,8 +10,10 @@ const Navbar = () => {
   
 
   return (
-    <Dom.Navbar bg="white" expand="lg">
+    <Dom.Navbar bg="white" expand="lg" className="mx-auto ">
       <Dom.Container fluid className="pb-2 border-bottom " >
+        <div className="mx-auto max-w-7x1 d-flex w-100 justify-content-between">
+
         <Dom.Navbar.Brand as={Link} to="/home">
         <img src={Logo} alt="logo jdwdev.it" style={{ height: '3rem' }}/>
         </Dom.Navbar.Brand>
@@ -49,6 +51,7 @@ const Navbar = () => {
             <Dom.Nav.Link as={Link} to="/projects">Projects</Dom.Nav.Link>
           </Dom.Nav>
         </Dom.Navbar.Collapse>
+        </div>
       </Dom.Container>
       
 

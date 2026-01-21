@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useFilters } from '../context/FiltersContext';
 import Filters from './components/projects/Filters';
 
+import ProjectSnap from './components/projects/ProjectSnap';
+
 import axios from 'axios';
 
 const ProjectsPage = () => {
@@ -35,7 +37,17 @@ const ProjectsPage = () => {
       
       
       <Filters />
-      
+      <div>
+        {projects.lenght === 0 ? (
+          <span>loading...</span>
+        ) :
+        (
+          projects.map((project)=>(
+            <ProjectSnap project={project}/>
+
+          ))
+        )}
+      </div>
     
     </div>
   );

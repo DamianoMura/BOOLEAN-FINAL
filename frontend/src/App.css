@@ -63,3 +63,9 @@ utility
 .rotate-180 {
   transform: rotate(180deg);
 }
+
+.max-w-7x1{
+  max-width: 80rem;
+  
+}
+

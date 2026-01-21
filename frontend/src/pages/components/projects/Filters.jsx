@@ -74,10 +74,10 @@ const Filters = ({
 
   return (
     <div className="border-2 border-top border-bottom">
-      <div className="py-3">
+      <div className="pt-3">
         <button 
           onClick={() => setOpen(!open)}
-          className="p-3 w-100 text-start btn btn-light d-flex justify-content-between align-items-center"
+          className="px-3 pt-2 w-100 text-start btn btn-light d-flex justify-content-between align-items-center"
         >
           <span className="fw-medium">Filters Menu</span>
           <i 
@@ -87,7 +87,7 @@ const Filters = ({
         </button>
         
         {open && (
-          <div className="p-4 border-top">
+          <div className="px-2 py-3 border-top">
             <div className="px-3 py-4 px-md-4 px-lg-5 border-top bg-light">
               <form onSubmit={handleSubmit} className="row g-4">
                 <div className={`row g-3 ${isAdmin ? 'row-cols-1 row-cols-lg-4' : 'row-cols-1 row-cols-sm-3'}`}>
