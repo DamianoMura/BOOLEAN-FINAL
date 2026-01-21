@@ -51,7 +51,7 @@ class ProjectSectionController extends Controller
      */
     public function update(Request $request, ProjectSection $projectSection)
     {
-        $message = 'ciao';
+
         $project = Project::findOrFail($projectSection->project_id);
         //
         $allSections = ProjectSection::where('project_id', $project->id)->orderBy('order')->get();
@@ -87,6 +87,7 @@ class ProjectSectionController extends Controller
             ]);
             $projectSection->title = $validated['title'];
             $projectSection->content = $validated['content'];
+            $projectSection->last_edited_by = Auth::id();
             $projectSection->save();
             $message = 'Section "' . $projectSection->title . '" edited successfully';
         }

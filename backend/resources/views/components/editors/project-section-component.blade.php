@@ -13,17 +13,16 @@
     </div>
     <p class="p-4 ">{{$section->content}}</p>
     @if ($project->editor->contains(Auth::user()))
-    <div class="flex flex-col w-full px-3 py-1 space-y-2 font-semibold text-white rounded-b-lg bg-slate-500 lg:items-center lg:flex-row">
+    <div class="flex flex-col w-full px-3 py-1 space-y-2 font-semibold text-white rounded-b-lg bg-slate-500 lg:items-center lg:flex-row sm:justify-between">
         
         @admin
-        <div class="flex justify-between ">
+        <div class="flex items-center justify-between">
 
             <div class="flex flex-col ">
                 @if ($section->order>1)
                 <form method="POST" action="{{route('project-sections.update',$section)}}">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="edit_position" value="up">
                     <input type="hidden" name="edit_position" value="up">
                     <button type="submit" class="flex items-center lg:w-36"><i class="fa-solid fa-caret-up"></i> move up</button>
                 </form>
@@ -58,19 +57,19 @@
                     </form>
             </div>
         </div>
-        <div class="w-full border-b border-white lg:border-b-0 "></div> <!-- separator for lg breakpoint -->
+        <div class="w-full border-b border-white lg:hidden"></div> <!-- separator for lg breakpoint -->
         @endadmin
         
-        <div class="flex flex-col w-full space-x-0 space-y-2 text-right sm:space-y-0 sm:space-x-2 sm:flex-row sm:justify-end">
-            <div class="flex flex-col text-center lg:flex-row lg:w-full">
-              <span>created by :</span> <span>{{ $section->user_id == Auth::id() ? 'you' : $section->author->name}}</span> 
+        <div class="text-right">
+            <div >
+              <span>created by : </span> <span>{{ $section->user_id == Auth::id() ? 'you' : $section->author->name}}</span> 
             </div>
-            <div class="flex flex-col text-center lg:flex-row lg:w-full">
+            <div >
               <span>Last edited by :</span> <span>{{$section->last_edited_by== Auth::id() ? 'you' : $section->lastEditedBy->name }}</span> 
             </div>
-            <div class="flex flex-col text-center lg:flex-row lg:w-full">
-               <span>{{$section->updated_at ? 'Last Updated At' : 'Created At' }} :</span> 
-               <span>{{$section->updated_at ? $section->updated_at : $section->created_at }}</span> 
+            <div >
+               <span>{{$section->updated_at ? 'Updated: ' : 'Created: ' }}</span> 
+               <span>{{$section->updated_at ? ' '.$section->updated_at : ' '.$section->created_at }}</span> 
             </div>
         </div>
     </div>
