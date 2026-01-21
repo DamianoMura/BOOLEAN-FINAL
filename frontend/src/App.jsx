@@ -10,24 +10,31 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Projects from "./pages/Projects";
+import ProjectsPage from "./pages/ProjectsPage";
+import NotFound from './pages/NotFound';
 
 //layouts
 import DefaultLayout from "./layouts/DefaultLayout";
 
+// filtersContext 
+import { FiltersProvider } from './context/FiltersContext';
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* route della landing page senza layout */}
-        <Route path="/" element={<Landing />} />
-        {/* route della altre pagine con layout */}
-        <Route element={<DefaultLayout />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-        </Route>
-      </Routes>
+      <FiltersProvider>
+        <Routes>
+          {/* route della landing page senza layout */}
+          <Route path="/" element={<Landing />} />
+          {/* route della altre pagine con layout */}
+          <Route element={<DefaultLayout />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/not-found" element={<NotFound />} />
+          </Route>
+        </Routes>
+
+      </FiltersProvider>
     </BrowserRouter>
   )
 }

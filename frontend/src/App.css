@@ -59,3 +59,7 @@ utility
 .h-full{
   height:100%;
 }
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
