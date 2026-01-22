@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 const ProjectSnap = ({project}) => {
   const location=useLocation();
-  
+ 
   return (
     <div key={project.id} className="p-2 border rounded ">
       {/* Project   */}
@@ -21,7 +21,7 @@ const ProjectSnap = ({project}) => {
                     <h3 >
                       { project.title }</h3>
                 </div>
-              </div>{location.pathname='/projects'&& 
+              </div>{location.pathname=='/projects'&& 
                 (<Link to ={`/projects/${project.slug}`} className="d-flex align-items-center justify-self-end text-decoration-none -transform-y-3">
                       <i className="fa-solid fa-eye"></i>
                       <span className='ms-2 -transform-y-3'>view</span> 
@@ -35,7 +35,7 @@ const ProjectSnap = ({project}) => {
                 <div className="d-flex justify-content-between" >
                     <div>
                       <p>
-                       Author : <strong> { project.author.name }</strong>
+                       Author : <strong> { project.author }</strong>
                       </p>
                     </div>
                 </div>

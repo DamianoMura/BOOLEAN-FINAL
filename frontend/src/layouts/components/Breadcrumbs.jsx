@@ -6,30 +6,34 @@ const Breadcrumbs = () => {
   //location for breadcrumbs
   const location = useLocation();
   
-  const pathnames = location.pathname.split('/').filter(x => x);
-    const pathMap = {
-    'home': 'Welcome Aboard!',
-    'projects': 'Projects',
-    
-    };
-    const formatName = (path) => {
-    const mapped = pathMap[path];
-    if (mapped) return mapped;
-    
-    return path
-      .replace(/-/g, ' ')
-      .replace(/_/g, ' ')
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  };
+  const pathnames = location.pathname.split('/')
+  pathnames.shift()
+  
   return (
     <>
-    <div className="mx-auto bg-white">
-      {pathnames.map((names)=>(
-        <div>{names} </div>
+    <div className="py-4 bg-white d-flex">
+      <div className="container ">
+        <ul className="my-auto d-flex list-unstyled align-items-center">
+          {pathnames.map((name) => {
+        
+            if (location.pathname.startsWith(`/${name}`) && pathnames.length>1) {
+              return (
+                <li key={name} className="d-flex fw-semibold align-items-center bread-link">
+                  <i className="fa-solid fa-chevron-right"></i>
+                  <Link to={`/${name}`} className="text-black text-decoration-none -transform-y-2">  {name}</Link>
+                </li>
+              ) ;
+            } else {
+              return <li key={name} className="d-flex align-items-center">
+                  <i className="fa-solid fa-chevron-right lh-2 "></i>
+                  <div className='-transform-y-2'>  {name}</div>
+                </li>;
+            }
+            })
+          }
 
-      ))}
+        </ul>
+      </div>
     </div>
     </>
   )

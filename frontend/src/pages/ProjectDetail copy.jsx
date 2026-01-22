@@ -8,10 +8,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 const ProjectDetail = () => {
   const location =useLocation()
   const [project , setProject]= useState([])
-
+  console.log(project.sections)
+  console.log(project.sections[0].author)
   useEffect(()=>{
     axios.get(`http://localhost:8000/api${location.pathname}`).then((resp)=>{
-    
+      console.log
       setProject(resp.data.data);
     }).catch((err)=> {
       
@@ -20,25 +21,7 @@ const ProjectDetail = () => {
   },[]);
   return (
     <div className="p-5 bg-white rounded-lg shadow">
-        {project && Object.keys(project).length > 0 ? (
-    <ProjectSnap project={project} />
-) : (
-  <div>No project to show</div>
-)}
-
-{project.sections && project.sections.length > 0 && (
-  <>
-    <h3 className="m-3 text-center">Sections</h3>
-    <ul className="list-unstyled">
-       {project.sections.map((section) => (
-        <li key={section.id}><ProjectSection  section={section}/></li> 
-        
-      ))}
-    </ul>
-  </>
-)}
-      
-        
+       
       
     </div>
   )

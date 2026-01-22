@@ -6,7 +6,6 @@ import Logo from '../../assets/logos/jdwblack.png';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  console.log(location.pathname)
 
   return (
     <nav className="bg-white shadow-sm navbar navbar-expand-lg navbar-light border-bottom">

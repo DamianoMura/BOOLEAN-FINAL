@@ -184,7 +184,7 @@ class ProjectController extends Controller
             },
             'user',
             'editor' => function ($query) {
-                $query->select('id', 'name', 'email');
+                $query->select('user_id', 'name', 'email');
             }
         ])
             ->where('published', true)
@@ -212,11 +212,8 @@ class ProjectController extends Controller
                     'name' => $project->category->name,
                     'label' => $project->category->label,
                 ] : null,
-                'author' => $project->user ? [
-                    'id' => $project->user->id,
-                    'name' => $project->user->name,
-                    'email' => $project->user->email,
-                ] : null,
+                'author' => $project->user->name,
+
                 'technologies' => $project->technology->map(function ($tech) {
                     return [
                         'id' => $tech->id,
@@ -231,7 +228,9 @@ class ProjectController extends Controller
                         'title' => $section->title,
                         'content' => $section->content,
                         'order' => $section->order,
+                        'author' => $section->author->name,
                         'created_at' => $section->created_at->format('Y-m-d H:i:s'),
+
                     ];
                 }),
                 'editors' => $project->editor->map(function ($editor) {

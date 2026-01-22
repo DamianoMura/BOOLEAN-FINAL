@@ -115,7 +115,17 @@ i{
   }
 
 }
-
+.bread-link{
+ color: black !important;
+transition: all 0.2s ease;
+}
+.bread-link:hover{
+  transform: translateY(-3px);
+  transition: all 0.2s ease;
+}
+.bread-link:hover a{
+  color: #3e60ce !important;
+}
 
 /* project-snap - category */
 .category{
@@ -134,7 +144,7 @@ i{
   display: flex;
   align-items: center;
 }
-
+/* project section*/
 /* logo in landing with breakpoints */
 
 .logo img{
@@ -167,12 +177,20 @@ utility
   margin-bottom: 2px;
 }
 .my-20{
- margin-top: 20px;
- margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .-transform-y-3{
   transform:translateY(-3px);
-
+  
+}
+.-transform-y-2{
+  transform:translateY(-2px);
+  
+}
+.-transform-y-1{
+  transform:translateY(-1px);
+  
 }
 .bg-light-gray{
   /* laravel background set for consistency between 2 apps */
@@ -182,10 +200,26 @@ utility
 .rounded-lg{
   border-radius: 5px;
 }
+.rounded-t-lg{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.rounded-b-lg{
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 .border-gray-200{
   border-color: rgb(200, 200, 200);
 }
-
+.text-right{
+  text-align: right;
+}
+.bg-light-blue{
+  background-color: #BFDBFE;
+}
+.bg-slate-500{
+  background-color: #64748B;
+}
 .h-full{
   height:100%;
 }
