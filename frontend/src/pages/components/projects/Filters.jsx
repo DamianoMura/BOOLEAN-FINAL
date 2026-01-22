@@ -156,7 +156,9 @@ const Filters = ({
                       onChange={(e) => setLocalTechnology(e.target.value)}
                       disabled={loadingTechnologies}
                     >
-                      <option value="">All Technologies</option>
+                      <option value="">
+                        All Technologies {!loadingTechnologies && `(${technologies.length})`}
+                      </option>
                       {loadingTechnologies ? (
                         <option value="" disabled>Loading technologies...</option>
                       ) : technologies.length === 0 ? (
@@ -252,4 +254,4 @@ const Filters = ({
   );
 };
 
-export default Filters;
+export default Filters ;

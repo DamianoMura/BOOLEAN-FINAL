@@ -10,9 +10,132 @@
   box-shadow: inset rgba(128, 128, 128, 0.409) 10px 10px 10px;
 }
 
+/* breadcrumb */
 
 
-/* logo with breakpoints */
+/* modifiche ai selettori bootstrap per rendere la navbar come in laravel */
+
+/* Animazione icone */
+.hover-show {
+  transition: opacity 0.3s ease;
+}
+
+.nav-link:hover .hover-show {
+  opacity: 1 !important;
+}
+
+/* navbar */
+.nav-link {
+  transition: all 0.3s ease;
+}
+.nav-link:hover .fa-solid:not(.hover-show) {
+  opacity: 0 !important;
+}
+
+.navbar-collapse {
+    background: white;
+}
+.nav-item {
+    margin: 0.25rem 0;
+}
+.nav-icon {
+   display: none !important;
+}
+
+
+
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  min-height: 100%;
+}
+.navbar-nav .active{
+  height:100% !important;
+  border-left: #BFC5FB 3px solid;
+  background-color: #EEF2FF;
+} 
+i{
+  font-size: 20px;
+}
+@media (min-width: 991.98px) {
+  .container {
+      display: flex !important;
+      align-items: stretch !important;
+      margin: 0 auto  !important;
+    }
+  
+    .navbar {
+      padding: 0 !important;
+      height: 100% !important;
+    }
+  
+    .navbar-brand {
+      display: flex !important;
+      align-items: center !important;
+      height: auto !important;
+      padding: 0 !important;
+    }
+  
+    .collapse.navbar-collapse {
+      display: flex !important;
+      align-items: stretch;
+      flex: 1;
+    }
+  
+    .navbar-nav {
+      display: flex !important;
+      flex: 0 1 !important;
+      align-items: stretch !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  .navbar-nav .active{
+    height:100% !important;
+    border-left:  0px hidden ;
+    border-bottom: #BFC5FB 3px solid;
+    background-color: white;
+    transform: translateY(3px);
+  } 
+  
+
+    .nav-item {
+      display: flex !important;
+      flex: 0 1 !important;
+      align-items: stretch !important;
+      margin:0 !important;
+    }
+  .nav-icon {
+    display: flex !important;
+  }
+  .nav-link {
+    padding:auto !important;
+  }
+
+}
+
+
+/* project-snap - category */
+.category{
+  
+  border:solid 1px #DCEAFD;
+  padding: 12px 10px;
+  border-radius: 5px;
+  background-color: #DFECFE;
+}
+
+.technology{
+  color: #1E40AF;
+  background-color: #DBEAFE;
+  border-radius: 10px;
+  padding: 2px 5px;
+  display: flex;
+  align-items: center;
+}
+
+/* logo in landing with breakpoints */
 
 .logo img{
   max-width: 300px;
@@ -43,7 +166,14 @@ utility
 .mb-2{
   margin-bottom: 2px;
 }
+.my-20{
+ margin-top: 20px;
+ margin-bottom: 20px;
+}
+.-transform-y-3{
+  transform:translateY(-3px);
 
+}
 .bg-light-gray{
   /* laravel background set for consistency between 2 apps */
   background-color: #F3F4F6
@@ -59,6 +189,9 @@ utility
 .h-full{
   height:100%;
 }
+.w-full{
+  width:100%;
+}
 
 .rotate-180 {
   transform: rotate(180deg);
@@ -68,4 +201,11 @@ utility
   max-width: 80rem;
   
 }
+
+.translate-y{
+ top: 1px;
+}
+
+
+
 

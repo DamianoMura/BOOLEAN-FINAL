@@ -1,7 +1,7 @@
 import {React  , useState} from 'react'
 
 import { Link  , useLocation } from "react-router-dom";
-import * as Dom  from 'react-bootstrap';
+
 const Breadcrumbs = () => {
   //location for breadcrumbs
   const location = useLocation();
@@ -24,18 +24,14 @@ const Breadcrumbs = () => {
       .join(' ');
   };
   return (
-    <Dom.Breadcrumb className="p-2 bg-white shadow">
-        {pathnames.map((name, index) => {
-        const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
-        const isLast = index === pathnames.length - 1;
-        
-        return  (
-          <Dom.Breadcrumb.Item active key={routeTo} className="text-center w-100 ">
-           <h4 className="m-0"> {formatName(name)}</h4>
-          </Dom.Breadcrumb.Item>
-        ) 
-      })}
-      </Dom.Breadcrumb>
+    <>
+    <div className="mx-auto bg-white">
+      {pathnames.map((names)=>(
+        <div>{names} </div>
+
+      ))}
+    </div>
+    </>
   )
 }
 

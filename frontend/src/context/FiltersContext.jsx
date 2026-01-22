@@ -7,9 +7,6 @@ export const FiltersContext = createContext();
 // Hook personalizzato per usare il context
 export const useFilters = () => {
   const context = useContext(FiltersContext);
-  if (!context) {
-    throw new Error('useFilters deve essere usato dentro FiltersProvider');
-  }
   return context;
 };
 
@@ -69,12 +66,7 @@ export const FiltersProvider = ({ children }) => {
 
   // refresh filters
   const updateFilters = useCallback((newFilters) => {
-    if(newFilters['search'].length>25) {
-      resetFilters
-      alert('your search field is way too long, retry')
-      document.getElementById('search').value=''
-    }
-    else
+  
     setFilters(prev => ({ ...prev, ...newFilters }));
   }, []);
 

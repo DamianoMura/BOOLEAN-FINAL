@@ -6,16 +6,7 @@ import LandImg from './components/landing/LandImg'
 const Landing = () => {
  return (
 <>
-    <header className="sticky-top">
-      <nav className="container mt-3 navbar navbar-expand-lg">
-        <div className="container-fluid d-flex justify-content-end">
-          <div className="user-buttons">
-            <a href="http://localhost:8000/login" className="landing-button" >Login</a> or 
-            <a href="http://localhost:8000/register" className="landing-button" >Register</a>
-          </div>
-      </div>
-    </nav>
-    </header>
+    
     <main className="mb-4">
       <div className="container mt-100">
         <div className="card">

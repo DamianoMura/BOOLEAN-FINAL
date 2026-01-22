@@ -9,7 +9,9 @@ import axios from 'axios';
 
 const ProjectsPage = () => {
   const navigate = useNavigate();
-  const { filters } = useFilters(); // filters from context
+  const location=useLocation();
+  
+  const  {filters, resetFilters}  = useFilters(); // filters from context
   const [projects,setProjects]=useState([]);//state for projects
   const [loadingProjects,setLoadingProjects]=useState(); //loading state from axios call
 
@@ -18,8 +20,30 @@ const ProjectsPage = () => {
     axios.get(`http://localhost:8000/api/projects${location.search}`).then((resp)=>{
       
       setProjects(resp.data.data);
-    }).catch((err) => navigate("/not-found", {replace : true}));
-  },[location.search])
+    }).catch((err)=> {
+      
+      alert(`Bad filter \n${err.message} \nReturning all projects as we reset the filters`);
+      
+      
+      resetFilters([]);
+     
+      replaceSearchValue();
+      
+      
+      // Reset dell'URL (opzionale)
+      navigate({ search: '' }, { replace: true });
+    });
+  },[location.search]);
+  const replaceSearchValue = useCallback(() => {
+  const searchInput = document.getElementById('search');
+  if (searchInput) {
+    searchInput.value = '';
+    // Trigger event per aggiornare eventuali stati collegati
+    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    searchInput.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+}, []);
+  //refresh query string
   useEffect(()=>{
 		const qS = new URLSearchParams();
       const currentFilters=Object.entries(filters)
@@ -39,17 +63,20 @@ const ProjectsPage = () => {
       
       
       <Filters />
-      <div>
+        
+      <ul className='list-unstyled'>
         {projects.lenght === 0 ? (
-          <span>loading...</span>
+          <li id="loading">loading...</li>
         ) :
         (
           projects.map((project)=>(
-            <ProjectSnap project={project}/>
+            <li  key={project.id} className='my-2'>
+              <ProjectSnap project={project}/>
+            </li>
 
           ))
         )}
-      </div>
+      </ul>
     
     </div>
   );

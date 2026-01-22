@@ -19,7 +19,14 @@ const LandDesc = () => {
        <div className="text-center">
         
         <Link to ="/home" className="mb-3 btn btn-outline-primary justify-self-center"> enter</Link>
-       </div>
+        <div>
+          <p>Or if you are registered</p>
+          <div >
+            <a href="http://localhost:8000/login" className="btn btn-outline-primary" >Login</a> 
+            
+          </div>
+        </div>
+    </div>
    </>
   )
 }
