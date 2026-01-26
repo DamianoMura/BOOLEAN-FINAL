@@ -21,6 +21,7 @@ class ProjectController extends Controller
         $query = Project::with([
             'category',
             'technology',
+            'github_url',
             'sections' => function ($query) {
                 $query->where('published', true)
                     ->orderBy('order')
@@ -49,6 +50,7 @@ class ProjectController extends Controller
                 'id' => $project->id,
                 'slug' => $project->slug,
                 'title' => $project->title,
+                'github_url' => $project->github_url,
                 'description' => $project->description,
                 'created_at' => $project->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $project->updated_at->format('Y-m-d H:i:s'),
