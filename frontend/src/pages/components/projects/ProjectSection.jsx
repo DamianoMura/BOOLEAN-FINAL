@@ -9,7 +9,7 @@ const ProjectSection = ({section}) => {
               <h4 className="text-lg capitalize">{section.title}</h4>
             </div>
           </div>
-          <p className="p-4">{section.content}</p>
+          <div className="p-4" dangerouslySetInnerHTML={{ __html: section.content }} />
           
         </div>
 

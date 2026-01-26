@@ -21,7 +21,7 @@
             <div class="flex items-center">
                
             @if($project->github_url)
-                    <i class="text-2xl fa-brands fa-github"></i> : <a href="{{ $project->github_url }}" target="_Blank"> Have a look on gitHub</a>
+                    <i class="text-2xl fa-brands fa-github"></i>  <a href="{{ $project->github_url }}" target="_Blank"> Have a look on gitHub</a>
                     @else
                     <i class="text-2xl fa-brands fa-github"></i> not linked
                     

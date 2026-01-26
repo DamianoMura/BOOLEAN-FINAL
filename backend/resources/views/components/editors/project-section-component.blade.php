@@ -11,7 +11,7 @@
            
         @endif
     </div>
-    <p class="p-4 ">{{$section->content}}</p>
+    <div class="p-4 ">{!!$section->content!!} </div>
     @if ($project->editor->contains(Auth::user()))
     <div class="flex flex-col w-full px-3 py-1 space-y-2 font-semibold text-white rounded-b-lg bg-slate-500 lg:items-center lg:flex-row sm:justify-between">
         

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use App\Casts\HtmlCast;
 
 class ProjectSection extends Model
 {
@@ -16,7 +18,21 @@ class ProjectSection extends Model
         'last_edited_by',
         'published'
     ];
+    protected function casts(): array
+    {
+        $casts = [
+            'order' => 'integer',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
 
+        // Aggiungi il cast per content solo se la classe esiste
+        if (class_exists(\App\Casts\HtmlCast::class)) {
+            $casts['content'] = \App\Casts\HtmlCast::class;
+        }
+
+        return $casts;
+    }
     public function project()
     {
 
