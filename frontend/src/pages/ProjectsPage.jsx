@@ -13,12 +13,13 @@ const ProjectsPage = () => {
   
   const  {filters, resetFilters}  = useFilters(); // filters from context
   const [projects,setProjects]=useState([]);//state for projects
-  const [loadingProjects,setLoadingProjects]=useState(); //loading state from axios call
+  const [loadingProjects,setLoadingProjects]=useState(true); //loading state from axios call
 
 // we make a db call with location.search as string query
 	  useEffect(()=>{
     axios.get(`http://localhost:8000/api/projects${location.search}`).then((resp)=>{
       
+      setLoadingProjects(false)
       setProjects(resp.data.data);
     }).catch((err)=> {
       
@@ -65,16 +66,30 @@ const ProjectsPage = () => {
       <Filters />
         
       <ul className='list-unstyled'>
-        {projects.lenght === 0 ? (
-          <li id="loading">loading...</li>
-        ) :
-        (
+        {projects && Object.keys(projects).length > 0 ? (
           projects.map((project)=>(
             <li  key={project.id} className='my-2'>
               <ProjectSnap project={project}/>
             </li>
 
           ))
+        ) :
+        (
+           loadingProjects==true ?
+
+         ( <div className='mt-100 w-100 h-100 d-flex flex-cols justify-content-center align-items-center'>
+            <div className="spinner-border me-3" role="status">
+              <span className="sr-only"></span>
+            </div>
+            <div>Loading...</div>
+          </div>)
+          :(
+          <div className='mt-100 w-100 h-100 d-flex flex-cols justify-content-center align-items-center'>
+            
+            <div>No Projects found...</div>
+          </div>)
+          
+          
         )}
       </ul>
     

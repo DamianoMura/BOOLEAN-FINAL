@@ -7,8 +7,8 @@ const Landing = () => {
  return (
 <>
     
-    <main className="mb-4">
-      <div className="container mt-100">
+    <main className="mb-4 mt-100">
+      <div className="container">
         <div className="card">
           <div className="container">
             <div className="row">

@@ -52,16 +52,10 @@ class ProjectController extends Controller
                 'description' => $project->description,
                 'created_at' => $project->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $project->updated_at->format('Y-m-d H:i:s'),
-                'category' => $project->category ? [
-                    'id' => $project->category->id,
-                    'name' => $project->category->name,
-                    'label' => $project->category->label,
+                'category' => $project->category->label,
 
-                ] : null,
-                'author' => $project->user ? [
-                    'id' => $project->user->id,
-                    'name' => $project->user->name,
-                ] : null,
+                'author' => $project->user->name,
+
                 'technologies' => $project->technology->map(function ($tech) {
                     return [
                         'id' => $tech->id,
@@ -70,14 +64,7 @@ class ProjectController extends Controller
                         'fontawesome_class' => $tech->fontawesome_class ?? null,
                     ];
                 }),
-                'sections' => $project->sections->map(function ($section) {
-                    return [
-                        'id' => $section->id,
-                        'title' => $section->title,
-                        'content' => $section->content,
-                        'order' => $section->order,
-                    ];
-                }),
+
                 'stats' => [
                     'sections_count' => $project->sections->count(),
                     'technologies_count' => $project->technology->count(),
@@ -175,6 +162,7 @@ class ProjectController extends Controller
 
     public function show($slug)
     {
+
         $project = Project::with([
             'category',
             'technology',
@@ -207,11 +195,7 @@ class ProjectController extends Controller
                 'description' => $project->description,
                 'created_at' => $project->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $project->updated_at->format('Y-m-d H:i:s'),
-                'category' => $project->category ? [
-                    'id' => $project->category->id,
-                    'name' => $project->category->name,
-                    'label' => $project->category->label,
-                ] : null,
+                'category' => $project->category->label,
                 'author' => $project->user->name,
 
                 'technologies' => $project->technology->map(function ($tech) {
@@ -233,13 +217,9 @@ class ProjectController extends Controller
 
                     ];
                 }),
-                'editors' => $project->editor->map(function ($editor) {
-                    return [
-                        'id' => $editor->id,
-                        'name' => $editor->name,
-                        'email' => $editor->email,
-                    ];
-                }),
+                'editors' => $project->editor->map(function ($editor) use ($project) {
+                    return $editor->name != $project->user->name ? $editor->name : null;
+                })->filter()->values(),
 
             ]
         ]);
