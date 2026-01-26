@@ -80,6 +80,12 @@
                   placeholder="Project Title" required>
                 </div>
               </div>
+              <div class="flex flex-col w-full">
+                <input type="text" name="github_url" value="{{ old('github_url', $project->github_url) }}"
+                  class="text-2xl font-semibold text-gray-800 bg-transparent border rounded-lg focus:ring-0 focus:border-blue-300"
+                  placeholder="github url" required>
+                </div>
+              </div>
                 <!-- category + published -->
                 <div class="flex flex-wrap items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white/50">
                   @foreach($categories as $category)

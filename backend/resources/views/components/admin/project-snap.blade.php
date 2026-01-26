@@ -18,6 +18,16 @@
                         $project->title }}</span>
                 </div>
             </div>
+            <div class="flex items-center">
+               
+            @if($project->github_url)
+                    <i class="text-2xl fa-brands fa-github"></i> : <a href="{{ $project->github_url }}" target="_Blank"> Have a look on gitHub</a>
+                    @else
+                    <i class="text-2xl fa-brands fa-github"></i> not linked
+                    
+                    @endif
+                </div>
+
             <div class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 sm:justify-between ">
                 <div class="flex items-center justify-between space-x-3">
                     <p class="mt-1 capitalize text-bold ">

@@ -46,6 +46,7 @@
       @else
           <h3 class="font-extrabold text-center">The Author did not provide any quick description</h3>
       @endif
+     
       <!-- Project Sections -->
       @if ($project->editor->contains(Auth::user()))
       <div class="flex justify-center py-6">

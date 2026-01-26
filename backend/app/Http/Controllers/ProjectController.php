@@ -47,6 +47,7 @@ class ProjectController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'github_url' => 'nullable|string',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'technologies' => 'nullable|array',
@@ -57,6 +58,7 @@ class ProjectController extends Controller
         $project = Project::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
+            'github_url' => $validated['github_url'] ?? null,
             'category_id' => $validated['category_id'] ?? 1,
             'published' => $request->boolean('published') ?? 0,
             'author_id' => Auth::id(),
@@ -95,6 +97,7 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'github_url' => 'nullable|string',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'technologies' => 'nullable|array',
@@ -109,7 +112,7 @@ class ProjectController extends Controller
 
         // Usa boolean() con valore di default
         $project->published = $request->boolean('published', false);
-
+        $project->github_url = $validated['github_url'] ?? null;
         // Gestione delle tecnologie con sync() invece di attach/detach
         if (isset($validated['technologies'])) {
             $project->technology()->sync($validated['technologies']);

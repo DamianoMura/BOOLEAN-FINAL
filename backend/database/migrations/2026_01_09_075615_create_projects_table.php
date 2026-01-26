@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id()->unique();
             $table->string('title');
+            $table->string('github_url')->nullable();
             $table->string('slug')->unique();
             $table->foreignId('category_id')->constrained()->default(1);
             $table->foreignId('author_id')->constrained(); //represents the author which is always an admin 
