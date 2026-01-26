@@ -3,8 +3,8 @@
     <div class="relative flex items-center w-full p-2 mr-2 border rounded-lg cursor-pointer group hover:bg-gray-50 sm:p-3 sm:space-x-3">
         <span >
             {{ $current_project->editor->count() > 1 ? 'Assigned Editors : ' : 'No Editors' }}
-            {{$current_project->editor->count() > 1 &&
-            $current_project->editor->count()}}
+            {{
+            $current_project->editor->count()-1>0 ? $current_project->editor->count()-1 : ''}}
         </span>
         @if ($current_project->editor->count() >1)
         <div

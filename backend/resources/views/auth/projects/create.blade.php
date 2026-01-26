@@ -82,6 +82,12 @@
                     class="text-2xl font-semibold text-gray-800 bg-transparent border rounded-lg focus:ring-0 focus:border-blue-300"
                     placeholder="Project Title" required>
                 </div>
+                <div class="flex flex-col w-full mt-3">
+                  <input type="text" name="github_url" value=""
+                    class="text-2xl font-semibold text-gray-800 bg-transparent border rounded-lg focus:ring-0 focus:border-blue-300"
+                    placeholder="github url">
+                </div>
+                
               </div>
               <!-- category + published -->
               <div class="flex flex-wrap items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white/50">

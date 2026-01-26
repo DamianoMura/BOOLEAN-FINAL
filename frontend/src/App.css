@@ -9,58 +9,7 @@
   margin:5px;
   box-shadow: inset rgba(128, 128, 128, 0.409) 10px 10px 10px;
 }
-#menu {
-  position: fixed;
-  top: 45%;
-  right: 1%;
-  display: flex;
-  align-items: center;
-  z-index: 1000;
-}
 
-/* Icona a destra, menu a sinistra */
-#menu>i {
-  order: 2;
-  /* Icona a destra */
-  cursor: pointer;
-}
-
-.home-menu {
-  order: 1;
-  /* Menu a sinistra */
-  list-style: none;
-  background: white;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  padding: 10px;
-  
-  /* Stato normale nascosto */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(20px);
-  transition: all 0.3s ease;
-  
-  /* Mostra al hover */
-  pointer-events: none;
-  width: 170px;
-  display: flex;
-  flex-direction: column;
-}
-.home-menu a{
-  text-decoration: none;
-  color: black;
-}
-.home-menu a:hover{
-  font-weight: bold;
-  
-}
-
-#menu:hover .home-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-  pointer-events: all;
-}
 
 /* modifiche ai selettori bootstrap per rendere la navbar come in laravel */
 

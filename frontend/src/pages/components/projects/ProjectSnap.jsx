@@ -33,6 +33,18 @@ const ProjectSnap = ({ project ,children }) => {
             </Link>
           )}
         </div>
+        <div className="mt-3">
+            {project.github_url  && (
+            <Link 
+              to={`${project.github_url}`} 
+              className="d-flex align-items-center justify-self-end text-decoration-none -transform-y-3"
+              target="_Blank"
+            >
+              <i className="fa-brands fa-github"></i>
+              <span className='ms-2 -transform-y-3'>github Link</span> 
+            </Link>
+          )}
+        </div>
         
         <div>
           {/* Author and view button */}
