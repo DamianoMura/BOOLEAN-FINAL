@@ -11,7 +11,7 @@ class Project extends Model
 {
     /** @use HasFactory<\Database\Factories\ProjectFactory> */
     use HasFactory;
-    protected $fillable = ['author_id', 'slug', 'title', 'description', 'category_id', 'published'];
+    protected $fillable = ['author_id', 'slug', 'title', 'github_url', 'description', 'category_id', 'published'];
 
     public function user()
     {
