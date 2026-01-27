@@ -8,9 +8,11 @@ import { FiltersContext } from '../context/FiltersContext';
 const DefaultLayout = () => {
 
   return (
-    <div>
-			<Navbar />
+    <div class="relative w-100">
+			<div className="top-0 bg-white shadow-md sticky-nav">
+        <Navbar />
       <Breadcrumbs/>
+      </div>
    
 			<main className="mx-auto mt-40 max-w-7x1" >
         <Outlet />

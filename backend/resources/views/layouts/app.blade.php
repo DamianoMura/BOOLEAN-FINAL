@@ -21,14 +21,14 @@
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="relative min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow dark:bg-gray-800">
                     <div class="flex flex-col px-4 py-6 mx-auto space-y-2 text-right lg:flex-row lg:justify-between lg:items-center max-w-7xl sm:px-6 lg:px-8">
-                        <div>
+                        <div class="relative">
                             {{ $header }}
                         </div>
                         <x-auth-session-status :status="session('status')">

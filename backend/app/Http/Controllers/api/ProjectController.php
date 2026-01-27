@@ -42,7 +42,7 @@ class ProjectController extends Controller
         $perPage = min($perPage, $maxPerPage);
 
         $projects = $query->paginate($perPage);
-        // dd($query);
+        // dd($projects);
 
         // Trasforma i risultati per l'API
         $transformedProjects = $projects->getCollection()->map(function ($project) {

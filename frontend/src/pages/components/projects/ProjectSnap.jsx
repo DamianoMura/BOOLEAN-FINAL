@@ -16,23 +16,23 @@ const ProjectSnap = ({ project ,children }) => {
                 {project.category || 'No category'}
               </span>
             </div>
-            <div>
-              <h3>
-                {project.title || 'No title'}
-              </h3>
-            </div>
           </div>
           
           {location.pathname === '/projects' && (
             <Link 
-              to={`/projects/${project.slug}`} 
-              className="d-flex align-items-center justify-self-end text-decoration-none -transform-y-3"
+            to={`/projects/${project.slug}`} 
+            className="d-flex align-items-center justify-self-end text-decoration-none -transform-y-3"
             >
               <i className="fa-solid fa-eye"></i>
               <span className='ms-2 -transform-y-3'>view</span> 
             </Link>
           )}
         </div>
+              <div className="mt-2">
+                <h3>
+                  {project.title || 'No title'}
+                </h3>
+              </div>
         <div className="mt-3">
             {project.github_url  && (
             <Link 
@@ -64,7 +64,8 @@ const ProjectSnap = ({ project ,children }) => {
                   key={tech.id || index}  
                   className="technology"
                 >
-                  {tech.label || 'Tech'} <i className={`${tech.fontawesome_class || ''}`}></i>
+                 <strong className="me-2">{tech.label || 'Tech'}</strong> <i className={`${tech.fontawesome_class || ''}`}></i>
+                  
                 </span>
               ))}
             </div>

@@ -55,8 +55,25 @@ const ProjectsPage = () => {
 
 
   return (
-    <div className="p-5 bg-white rounded-lg shadow">
-      
+    <div className='relative '>
+       <div className="pb-5 sticky-top w-70 d-flex justify-content-center align-items-center ">
+          <i className={`fa-solid fa-caret-left fs-1 mx-3 ${paginationLinks.prev ? 'clickable' : 'hidden'}`}
+            onClick={() => {
+              if (paginationLinks.prev) {
+                // console.log(location)
+                navigate({ search: location.search+'&'+paginationLinks.prev.split('?')[1] }, { replace: true });
+              }
+            }}></i>
+          <div>Page {paginationInfo.current_page} of {paginationInfo.last_page}</div>
+          <i className={`fa-solid fa-caret-right fs-1 mx-3 ${paginationLinks.next ? 'clickable' : 'hidden'}`}
+            onClick={() => {
+              if (paginationLinks.next) {
+                // console.log(location)
+                navigate({ search: location.search+'&'+paginationLinks.next.split('?')[1] }, { replace: true });
+              }
+            }}></i>
+        </div>
+    <div className="relative p-5 bg-white rounded-lg shadow">
       
       <Filters />
         
@@ -87,21 +104,8 @@ const ProjectsPage = () => {
           
         )}
       </ul>
-        <div className="mt-4 w-100 d-flex justify-content-between align-items-center">
-          <i className={`fa-solid fa-caret-left fs-1 mx-3 ${paginationLinks.prev ? 'clickable' : 'hidden'}`}
-            onClick={() => {
-              if (paginationLinks.prev) {
-                navigate({ search: paginationLinks.prev.split('?')[1] }, { replace: true });
-              }
-            }}></i>
-          <div>Page {paginationInfo.current_page} of {paginationInfo.last_page}</div>
-          <i className={`fa-solid fa-caret-right fs-1 mx-3 ${paginationLinks.next ? 'clickable' : 'hidden'}`}
-            onClick={() => {
-              if (paginationLinks.next) {
-                navigate({ search: paginationLinks.next.split('?')[1] }, { replace: true });
-              }
-            }}></i>
-        </div>
+       
+    </div>
     </div>
   );
 };
