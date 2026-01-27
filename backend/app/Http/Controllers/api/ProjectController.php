@@ -31,17 +31,18 @@ class ProjectController extends Controller
             }
         ])
             ->where('published', true)
-            ->select('id', 'slug', 'title', 'description', 'category_id', 'author_id', 'created_at', 'updated_at');
+            ->select('id', 'slug', 'title', 'description', 'github_url', 'category_id', 'author_id', 'created_at', 'updated_at');
 
         // Applica filtri
         $this->applyFilters($query, $request);
 
         // Paginazione
-        $perPage = $request->get('per_page', 15);
-        $maxPerPage = 50;
+        $perPage = $request->get('per_page', 5);
+        $maxPerPage = 5;
         $perPage = min($perPage, $maxPerPage);
 
         $projects = $query->paginate($perPage);
+        // dd($query);
 
         // Trasforma i risultati per l'API
         $transformedProjects = $projects->getCollection()->map(function ($project) {
@@ -108,17 +109,11 @@ class ProjectController extends Controller
             }
         }
 
-        // Filtro per tecnologia (ID o nome)
+        // Filtro per tecnologia (ID )
         if ($request->filled('technology')) {
-            if (is_numeric($request->technology)) {
-                $query->whereHas('technology', function ($q) use ($request) {
-                    $q->where('id', $request->technology);
-                });
-            } else {
-                $query->whereHas('technology', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->technology . '%');
-                });
-            }
+            $query->whereHas('technology', function ($q) use ($request) {
+                $q->where('technology_id', $request->technology);
+            });
         }
 
         // Filtro per autore
