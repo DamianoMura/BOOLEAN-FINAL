@@ -34,9 +34,10 @@
 
                 <!-- Modal Body -->
                 <div class="px-4 py-4 bg-white sm:px-6 sm:py-5">
-                    <form method="POST" action="{{ route('project-sections.update', $section ) }}" class="space-y-4 sm:space-y-6">
+                    <form method="POST" action="{{ route('project-sections.update', $section ) }}"
+                        class="space-y-4 sm:space-y-6">
                         @csrf
-                         @method('put')
+                        @method('put')
 
                         <input type="hidden" name="project_id" value="{{ $project_id }}">
                         <input type="hidden" name="section_id" value="{{ $section->id }}">
@@ -67,7 +68,7 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                       
+
                         <!-- Buttons -->
                         <div class="flex justify-end pt-4 space-x-3 border-t border-gray-100">
                             <button type="button" command="close" commandfor="edit-section-{{$section->id}}" class="px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl

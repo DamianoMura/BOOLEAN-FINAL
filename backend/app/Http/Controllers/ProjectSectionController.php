@@ -98,8 +98,13 @@ class ProjectSectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProjectSection $projectSection)
+    public function destroy(Request $request)
     {
-        //
+        $projectSectionId = $request->input('projectSectionId');
+        $projectSection = ProjectSection::findOrFail($projectSectionId);
+        $project =   Project::findOrFail($projectSection->project_id);
+        $title = $projectSection->title;
+        $projectSection->delete();
+        return redirect()->route('projects.show', $project)->with('status', 'Section "' . $title . '" deleted successfully from ' . $project->title . '.');
     }
 }

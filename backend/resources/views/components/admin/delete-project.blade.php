@@ -1,10 +1,10 @@
-<button command="show-modal" commandfor="delete-project"
+<button command="show-modal" commandfor="delete-project-{{$project->id}}"
     class="items-center px-4 py-2 text-red-800 bg-red-200 border border-red-800 rounded-lg hover:text-red-200 hover:bg-red-800">
     Delete
     <i class="fa-solid fa-trash-can"></i>
 </button>
 <el-dialog>
-    <dialog id="delete-project" aria-labelledby="delete-project"
+    <dialog id="delete-project-{{$project->id}}" aria-labelledby="delete-project"
         class="fixed inset-0 overflow-y-auto bg-transparent size-auto max-h-none max-w-none backdrop:bg-transparent">
         <el-dialog-backdrop
             class="fixed inset-0 transition-opacity bg-gray-500/75 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in">
@@ -50,7 +50,7 @@
 
 
 
-                    <button type="button" command="close" commandfor="delete-project"
+                    <button type="button" command="close" commandfor="delete-project-{{$project->id}}"
                         class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                 </div>
             </el-dialog-panel>

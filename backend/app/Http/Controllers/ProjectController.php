@@ -66,7 +66,7 @@ class ProjectController extends Controller
 
 
         if (isset($validated['technologies']) && !empty($validated['technologies'])) {
-            $project->technologies()->attach($validated['technologies']);
+            $project->technology()->attach($validated['technologies']);
         }
         $project->editor()->attach(Auth::user());
         return redirect()->route('projects.show', $project)->with('status', 'Project ' . $project->title . ' created successfully.');
@@ -128,14 +128,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
-    {
 
-        $title = $project->title;
-        $project->delete();
-
-        return redirect()->route('projects.index')->with('status', 'Project "' . $title . '" deleted successfully.');
-    }
 
 
     public function manageEditor(Request $request)

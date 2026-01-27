@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 
         //editors routes 
         Route::post('project-sections', [ProjectSectionController::class, 'store'])->name('project-sections.store');
+        Route::delete('project-sections/{projectSection}', [ProjectSectionController::class, 'destroy'])->name('project-sections.destroy');
 
         Route::put('project-sections/{projectSection}', [ProjectSectionController::class, 'update'])->name('project-sections.update');
     });

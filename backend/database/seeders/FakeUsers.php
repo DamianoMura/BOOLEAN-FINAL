@@ -39,7 +39,7 @@ class FakeUsers extends Seeder
         $new_2->assignRole('user');
         $new_2->save;
         $new_3 = User::create([
-            'name' => 'Admin',
+            'name' => 'Damiano Mura',
             'email' => 'Admin@fake.it',
             'password' => Hash::make('password'),
         ]);

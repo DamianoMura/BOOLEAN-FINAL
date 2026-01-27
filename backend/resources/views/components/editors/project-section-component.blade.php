@@ -7,7 +7,9 @@
         @if ( $section->user_id == Auth::id() || Auth::user()->isAdmin())
             <div class="text-right">
                 <x-editors.edit-project-section :projectid="$section->project_id" :section="$section" />
+                    <x-editors.delete-project-section :projectid="$section->project_id" :section="$section" />
             </div>
+            
            
         @endif
     </div>
