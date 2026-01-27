@@ -138,6 +138,9 @@ class ProjectController extends Controller
                     })
                     ->orWhereHas('category', function ($q) use ($searchTerm) {
                         $q->where('name', 'like', $searchTerm);
+                    })
+                    ->orWhereHas('user', function ($q) use ($searchTerm) {
+                        $q->where('name', 'like', $searchTerm);
                     });
             });
         }

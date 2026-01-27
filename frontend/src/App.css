@@ -238,6 +238,8 @@ utility
  top: 1px;
 }
 
-
+.hidden{
+  visibility: hidden !important;
+}
 
 
