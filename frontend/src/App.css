@@ -266,7 +266,8 @@ utility
   background-color: white;
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   padding:20px 0;
 
 }
