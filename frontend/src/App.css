@@ -258,24 +258,30 @@ utility
   position: sticky;
   z-index: 50;
 }
-.sticky-top{
-  position: sticky;
-  top: 30px !important;
+.pagination-links{
+  position: fixed;
+  bottom: 0;
   z-index: 51;
-  left: 15%;
+  box-shadow: rgba(0, 0, 0, 0.1) 3px -10px 4px, rgba(0, 0, 0, 0.06) 10px -20px 10px;
+  background-color: white;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding:20px 0;
+
+}
+
+.pagination-links i{
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pagination-links i:hover{
+  transform: scale(127%);
 }
 
 
 
 
-@media (min-width: 992px) {
-  .sticky-top{
-      top:12px !important;
-      left:15%;
-    }
-}
-.w-70{
-  width: 70%;
-}
+
 
  

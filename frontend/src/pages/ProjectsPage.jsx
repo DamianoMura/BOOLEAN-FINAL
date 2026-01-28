@@ -55,8 +55,8 @@ const ProjectsPage = () => {
 
 
   return (
-    <div className='relative '>
-       <div className="pb-5 sticky-top w-70 d-flex justify-content-center align-items-center ">
+    <div className='relative'>
+       <div className="pagination-links ">
           <i className={`fa-solid fa-caret-left fs-1 mx-3 ${paginationLinks.prev ? 'clickable' : 'hidden'}`}
             onClick={() => {
               if (paginationLinks.prev) {
