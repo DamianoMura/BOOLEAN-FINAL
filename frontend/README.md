@@ -1,16 +1,75 @@
-# React + Vite
+# Frontend — React SPA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA pubblica (guest) del progetto JDWDEV.it. Consuma le API REST del backend Laravel per visualizzare i progetti senza richiedere autenticazione.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19 + Vite 7
+- React Router DOM 7
+- Bootstrap 5.3
+- FontAwesome (brands + solid + regular)
+- Axios
+- React Context API
 
-## React Compiler
+## Avvio
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev     # http://localhost:5174
+```
 
-## Expanding the ESLint configuration
+## Struttura
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── context/FiltersContext.jsx   ← Stato globale filtri + chiamate API categorie/tecnologie
+├── layouts/
+│   ├── DefaultLayout.jsx        ← Layout con Navbar e Breadcrumbs
+│   └── components/
+│       ├── Navbar.jsx
+│       └── Breadcrumbs.jsx
+├── pages/
+│   ├── Landing.jsx              ← Hero page
+│   ├── Home.jsx                 ← Progetto in evidenza
+│   ├── ProjectsPage.jsx         ← Lista progetti + paginazione
+│   ├── ProjectDetail.jsx        ← Dettaglio progetto con sezioni
+│   ├── About.jsx
+│   ├── NotFound.jsx
+│   └── components/
+│       ├── ProjectSnap.jsx      ← Card riassuntiva progetto
+│       ├── ProjectSection.jsx   ← Sezione con rendering HTML
+│       └── Filters.jsx          ← Filtri, ricerca e ordinamento
+├── App.jsx                      ← Routing
+└── main.jsx
+```
+
+## Pagine e Route
+
+| Route | Componente | Descrizione |
+|---|---|---|
+| `/` | Landing | Pagina di benvenuto |
+| `/home` | Home | Progetto in evidenza |
+| `/projects` | ProjectsPage | Lista con filtri e paginazione |
+| `/projects/:slug` | ProjectDetail | Dettaglio progetto |
+| `/about` | About | Informazioni |
+| `*` | NotFound | 404 |
+
+## Sistema di Filtri
+
+I filtri sono gestiti globalmente da `FiltersContext` e sincronizzati con i query parameter dell'URL.
+
+- Ricerca testuale (titolo + descrizione)
+- Filtro per categoria
+- Filtro per tecnologia
+- Ordinamento per: data creazione, titolo, data aggiornamento
+- Direzione: asc / desc
+- Paginazione: 5 risultati per pagina
+
+## API consumate
+
+Base URL: `http://localhost:8000/api`
+
+- `GET /api/projects` — lista paginata con filtri
+- `GET /api/projects/:slug` — dettaglio progetto
+- `GET /api/categories` — lista categorie (per i filtri)
+- `GET /api/technologies` — lista tecnologie (per i filtri)
