@@ -2,7 +2,6 @@
 
 namespace App\View\Components\editors;
 
-
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,15 +14,20 @@ class ProjectSectionComponent extends Component
     public $section;
     public $project;
     public $lastEditor;
+    public $totalSections; // Aggiungi questa proprietà
+
     /**
      * Create a new component instance.
      */
     public function __construct($section)
     {
         $this->section = $section;
-        $project = Project::where('id', $section->project_id)->first();
-        // dd($project->author_id);
-        $this->project = $project;
+
+        // Carica il progetto con le relazioni necessarie
+        $this->project = Project::with(['sections', 'editor'])->find($section->project_id);
+
+        // Calcola il totale delle sezioni una volta sola
+        $this->totalSections = $this->project->sections->count();
     }
 
     /**
