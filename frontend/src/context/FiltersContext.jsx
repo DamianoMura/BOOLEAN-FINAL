@@ -34,7 +34,7 @@ export const FiltersProvider = ({ children }) => {
   const fetchCategories = useCallback(async () => {
     try {
       setLoadingCategories(true);
-      const response = await axios.get('http://localhost:8000/api/categories');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
       setCategories(response.data.categories || []);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -48,7 +48,7 @@ export const FiltersProvider = ({ children }) => {
   const fetchTechnologies = useCallback(async () => {
     try {
       setLoadingTechnologies(true);
-      const response = await axios.get('http://localhost:8000/api/technologies');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/technologies`);
       setTechnologies(response.data.technologies || []);
     } catch (error) {
       console.error('Error fetching technologies:', error);

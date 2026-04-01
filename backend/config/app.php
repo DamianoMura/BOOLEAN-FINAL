@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'guest' => env('GUEST_APP_PORT'),
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:5174'),
+    'demo_mode' => true,
     /*
     |--------------------------------------------------------------------------
     | Application Environment

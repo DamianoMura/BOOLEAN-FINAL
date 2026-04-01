@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('github_url')->nullable();
             $table->string('slug')->unique();
             $table->foreignId('category_id')->constrained()->default(1);
-            $table->foreignId('author_id')->constrained(); //represents the author which is always an admin 
+            $table->foreignId('author_id')->constrained('users'); //represents the author which is always an admin
             $table->longText('description')->nullable();
             $table->boolean('published')->default(false);
             $table->timestamps();
