@@ -5,29 +5,40 @@ import { Link } from "react-router-dom";
 const LandDesc = () => {
   return (
     <>
-      <h1 className="text-center text-primary">Welcome to my website!</h1>
-      <p>This is my portfolio website where i will post all my projects. <br/>
-      the Frontend part is developed in React.js <FontAwesomeIcon icon={faReact} /> and   bootstrap.css <FontAwesomeIcon icon={faBootstrap} /></p>
-      <p>This application will interact with the backend where i will be using Laravel 12 <FontAwesomeIcon icon={faLaravel} /> and   Tailwind.css <FontAwesomeIcon icon={faCss3} />  </p>
-      <p>This is the Final Project Subject that signs the end of the 600 hours course @ <strong>Boolean</strong>  as <strong>FullStack Web Developer</strong> :</p>
+      <div className="p-3 mb-4 border rounded bg-light border-primary-subtle">
+        <h5 className="mb-2 text-primary"><i className="fa-solid fa-circle-info me-2"></i>Live Demo</h5>
+        <p className="mb-1 small">
+          This is a <strong>live demo</strong> of a full-stack portfolio application built as the final project
+          for the <strong>Boolean</strong> Full-Stack Web Development course (600 hours).
+        </p>
+        <p className="mb-1 small">
+          <strong>Backend:</strong> Laravel 11 <FontAwesomeIcon icon={faLaravel} /> with role-based backoffice (Dev, Admin, User),
+          REST API, HTML-sanitized project sections, and Eloquent ORM with SQLite.
+        </p>
+        <p className="mb-1 small">
+          <strong>Frontend:</strong> React 19 <FontAwesomeIcon icon={faReact} /> SPA with Bootstrap 5 <FontAwesomeIcon icon={faBootstrap} />,
+          dynamic filtering, pagination, and Axios API integration.
+        </p>
+        <p className="mb-0 small text-muted">
+          Each demo session gets a fresh database copy — feel free to create, edit, and delete freely.
+        </p>
+      </div>
+
+      <h1 className="text-center text-primary">Welcome!</h1>
       <p>
-       I included a role system where Devs can manage the roles, Admins can create Projects and assign other users to work in them
-       </p>
-       <p>
-        Please feel free to have a look inside! (cv included) 
-       </p>
-       <div className="text-center">
-        
-        <Link to ="/home" className="mb-3 btn btn-outline-primary justify-self-center"> enter</Link>
+        Explore the public project showcase below, or log into the backoffice to see the
+        role-based dashboard in action.
+      </p>
+      <div className="text-center">
+        <Link to="/home" className="mb-3 btn btn-outline-primary justify-self-center">Explore Projects</Link>
         <div>
-          <p>Or if you are registered</p>
-          <div >
-            <a href="http://localhost:8000/login" className="btn btn-outline-primary" >Login</a> 
-            
+          <p>Try the backoffice with different roles</p>
+          <div>
+            <a href={`${import.meta.env.VITE_BACKEND_URL}/login`} className="btn btn-primary">Enter Demo Backoffice</a>
           </div>
         </div>
-    </div>
-   </>
+      </div>
+    </>
   )
 }
 

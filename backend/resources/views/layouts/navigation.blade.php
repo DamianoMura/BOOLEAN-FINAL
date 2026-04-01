@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="http://localhost:5174">
+                    <a href="{{ config('app.frontend_url') }}">
                         <x-application-nav-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" />
                     </a>
                 </div>
@@ -19,7 +19,7 @@
                             <span class="align-middle ms-10">Dashboard</span>
                         </div>
                     </x-nav-link>
-                  
+
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')" class="space-x-2">
@@ -27,16 +27,16 @@
                             <i class="absolute text-2xl transition duration-200 ease-in-out opacity-100 -top-1 fa-solid fa-folder group-hover:opacity-0"></i>
                             <i class="absolute text-2xl transition duration-200 ease-in-out opacity-0 -top-1 fa-solid fa-folder-open group-hover:opacity-100"></i>
                             <span class="align-middle ms-10">Projects</span>
-                        </div> 
-                        
+                        </div>
+
                     </x-nav-link>
-                  
+
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
+                <x-dropdown align="right" width="w-max">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
                             <div class="capitalize">{{ Auth::user()->name }}</div>
@@ -50,13 +50,29 @@
                     </x-slot>
 
                     <x-slot name="content">
-                          
+                        <div class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase dark:text-gray-500">
+                            Switch User
+                        </div>
 
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+                        @foreach($demoUsers ?? [] as $demoUser)
+                            @if(Auth::id() === $demoUser->id)
+                                <div class="block w-full px-4 py-2 text-sm font-semibold leading-5 text-indigo-600 bg-gray-100 dark:bg-gray-700 dark:text-indigo-400">
+                                    {{ $demoUser->name }} ({{ $demoUser->getRoleLabel() }})
+                                </div>
+                            @else
+                                <form method="POST" action="{{ route('demo.switch') }}">
+                                    @csrf
+                                    <input type="hidden" name="demo_user" value="{{ $demoUser->id }}">
+                                    <button type="submit" class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition duration-150 ease-in-out">
+                                        {{ $demoUser->name }} ({{ $demoUser->getRoleLabel() }})
+                                    </button>
+                                </form>
+                            @endif
+                        @endforeach
 
-                        <!-- Authentication -->
+                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
+                        <!-- Logout -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -101,9 +117,27 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+                <div class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase dark:text-gray-500">
+                    Switch User
+                </div>
+
+                @foreach($demoUsers ?? [] as $demoUser)
+                    @if(Auth::id() === $demoUser->id)
+                        <div class="block w-full px-4 py-2 text-sm font-semibold leading-5 text-indigo-600 bg-gray-100 dark:bg-gray-700 dark:text-indigo-400">
+                            {{ $demoUser->name }} ({{ $demoUser->getRoleLabel() }})
+                        </div>
+                    @else
+                        <form method="POST" action="{{ route('demo.switch') }}">
+                            @csrf
+                            <input type="hidden" name="demo_user" value="{{ $demoUser->id }}">
+                            <button type="submit" class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition duration-150 ease-in-out">
+                                {{ $demoUser->name }} ({{ $demoUser->getRoleLabel() }})
+                            </button>
+                        </form>
+                    @endif
+                @endforeach
+
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,36 +14,50 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Display the demo user selection view.
      */
     public function create(): View
     {
-        return view('auth.login');
+        $demoUsers = User::whereHas('role', function ($query) {
+            $query->where('name', '!=', 'dev');
+        })->get();
+
+        return view('auth.login', compact('demoUsers'));
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Log in as the selected demo user.
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $user = User::findOrFail($request->input('demo_user'));
 
+        if ($user->isDev()) {
+            return back()->withErrors(['demo_user' => 'This user is not available in demo mode.']);
+        }
+
+        Auth::login($user);
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
-     * Destroy an authenticated session.
+     * Destroy an authenticated session and clean up the session database.
      */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
+        $demoDb = $request->session()->get('demo_db');
+        if ($demoDb && file_exists($demoDb)) {
+            app('db')->purge('sqlite');
+            @unlink($demoDb);
+        }
 
+        $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect(config('app.url') . ":" . config('app.guest'));
+        return redirect('/login');
     }
 }

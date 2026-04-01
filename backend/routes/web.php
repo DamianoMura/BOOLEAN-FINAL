@@ -12,6 +12,16 @@ use App\Models\ProjectSection;
 
 Route::middleware('auth')->group(function () {
 
+    // Demo user switch
+    Route::post('/demo/switch', function (\Illuminate\Http\Request $request) {
+        $request->validate(['demo_user' => 'required|integer|exists:users,id']);
+        $user = \App\Models\User::findOrFail($request->input('demo_user'));
+        if (!$user->isDev()) {
+            \Illuminate\Support\Facades\Auth::login($user);
+        }
+        return redirect()->route('dashboard');
+    })->name('demo.switch');
+
     Route::get('/dashboard', [DashboardController::class, 'deploy'])->name('dashboard')->middleware([RoleCheck::class]);
 
 

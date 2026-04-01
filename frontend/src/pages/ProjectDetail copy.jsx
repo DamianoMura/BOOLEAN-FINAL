@@ -11,7 +11,7 @@ const ProjectDetail = () => {
   console.log(project.sections)
   console.log(project.sections[0].author)
   useEffect(()=>{
-    axios.get(`http://localhost:8000/api${location.pathname}`).then((resp)=>{
+    axios.get(`${import.meta.env.VITE_API_URL}/api${location.pathname}`).then((resp)=>{
       console.log
       setProject(resp.data.data);
     }).catch((err)=> {
