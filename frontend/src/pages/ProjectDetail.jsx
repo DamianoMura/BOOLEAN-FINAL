@@ -11,7 +11,7 @@ const ProjectDetail = () => {
   const cooperators=[];
 
   useEffect(()=>{
-    axios.get(`http://localhost:8000/api${location.pathname}`).then((resp)=>{
+    axios.get(`${import.meta.env.VITE_API_URL}/api${location.pathname}`).then((resp)=>{
     
       setProject(resp.data.data);
     }).catch((err)=> {

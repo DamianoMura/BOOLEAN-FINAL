@@ -17,9 +17,9 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['index', 'show'],
+    'allowed_methods' => ['GET', 'HEAD', 'OPTIONS'],
 
-    'allowed_origins' => ['http://localhost:*'],
+    'allowed_origins' => explode(',', env('CORS_ALLOWED_ORIGINS', 'http://localhost:*')),
 
     'allowed_origins_patterns' => [],
 

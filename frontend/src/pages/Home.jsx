@@ -5,7 +5,7 @@ import axios from 'axios';
 const Home = () => {
   const [project , setProject]= useState([])
    useEffect(()=>{
-    axios.get(`http://localhost:8000/api/projects/boolean-exam-final-project`).then((resp)=>{
+    axios.get(`${import.meta.env.VITE_API_URL}/api/projects/boolean-exam-final-project`).then((resp)=>{
     
       setProject(resp.data.data);
     }).catch((err)=> {
