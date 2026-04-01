@@ -17,7 +17,7 @@ const ProjectsPage = () => {
   const [paginationLinks,setPaginationLinks]=useState({});//pagination LINKS from axios call
 // we make a db call with location.search as string query
 	  useEffect(()=>{
-    axios.get(`http://localhost:8000/api/projects${location.search}`).then((resp)=>{
+    axios.get(`${import.meta.env.VITE_API_URL}/api/projects${location.search}`).then((resp)=>{
       
       setLoadingProjects(false)
       setPaginationInfo(resp.data.meta);

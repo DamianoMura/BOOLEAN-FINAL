@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\ErrorsHandler;
+use App\Http\Middleware\DemoSession;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         // $middleware->append(ErrorsHandler::class);
-        //
+        $middleware->web(append: [
+            DemoSession::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
